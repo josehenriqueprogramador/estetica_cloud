@@ -6,3 +6,7 @@ sqlalchemy
 pymysql
 python-multipart
 passlib[bcrypt]
+gunicorn
+uvicorn
+gunicorn
+uvicorn
