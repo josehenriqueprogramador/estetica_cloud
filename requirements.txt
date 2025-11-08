@@ -10,3 +10,4 @@ gunicorn
 uvicorn
 gunicorn
 uvicorn
+psycopg2-binary
