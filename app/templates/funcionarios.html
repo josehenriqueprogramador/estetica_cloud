@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Funcionários — {{ empresa.nome }}{% endblock %}
+
+{% block content %}
+<h2>🧑‍🔧 Funcionários da Empresa</h2>
+
+<form action="/funcionarios/{{ empresa.id }}/novo" method="post" class="row g-2 mb-4">
+  <div class="col-md-5">
+    <input class="form-control" name="nome" placeholder="Nome do funcionário" required>
+  </div>
+  <div class="col-md-5">
+    <input class="form-control" name="cargo" placeholder="Cargo" required>
+  </div>
+  <div class="col-md-2 d-grid">
+    <button class="btn btn-success">Adicionar</button>
+  </div>
+</form>
+
+<table class="table table-striped table-hover bg-white shadow-sm">
+  <thead class="table-light">
+    <tr>
+      <th>ID</th><th>Nome</th><th>Cargo</th><th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for f in funcionarios %}
+    <tr>
+      <td>{{ f.id }}</td>
+      <td>{{ f.nome }}</td>
+      <td>{{ f.cargo }}</td>
+      <td>
+        <a href="/funcionarios/{{ empresa.id }}/excluir/{{ f.id }}" class="btn btn-sm btn-danger">Excluir</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<a href="/dashboard/{{ empresa.id }}" class="btn btn-secondary">← Voltar ao Painel</a>
+{% endblock %}

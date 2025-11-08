@@ -1,0 +1,21 @@
+# Python
+*.pyc
+__pycache__/
+
+# Virtual environments
+venv/
+.env
+
+# Termux / outros caches
+*.pyo
+*.pyd
+
+# IDEs / editores
+.vscode/
+.idea/
+*.swp
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Serviços — {{ empresa.nome }}{% endblock %}
+
+{% block content %}
+<h2>💅 Serviços da Empresa</h2>
+
+<form action="/servicos/{{ empresa.id }}/novo" method="post" class="row g-2 mb-4">
+  <div class="col-md-3">
+    <input class="form-control" name="nome" placeholder="Nome do serviço" required>
+  </div>
+  <div class="col-md-3">
+    <input class="form-control" name="preco" type="number" step="0.01" placeholder="Preço (R$)" required>
+  </div>
+  <div class="col-md-4">
+    <input class="form-control" name="descricao" placeholder="Descrição opcional">
+  </div>
+  <div class="col-md-2 d-grid">
+    <button class="btn btn-primary">Adicionar</button>
+  </div>
+</form>
+
+<table class="table table-striped table-hover bg-white shadow-sm">
+  <thead class="table-light">
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+      <th>Preço (R$)</th>
+      <th>Descrição</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for s in servicos %}
+    <tr>
+      <td>{{ s.id }}</td>
+      <td>{{ s.nome }}</td>
+      <td>{{ "%.2f"|format(s.preco) }}</td>
+      <td>{{ s.descricao }}</td>
+      <td>
+        <a href="/servicos/{{ empresa.id }}/excluir/{{ s.id }}" class="btn btn-sm btn-outline-danger">Excluir</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<a href="/dashboard/{{ empresa.id }}" class="btn btn-secondary mt-3">← Voltar ao Painel</a>
+{% endblock %}

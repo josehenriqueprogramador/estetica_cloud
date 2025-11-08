@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Painel — {{ empresa.nome }}{% endblock %}
+
+{% block content %}
+<h2>☁️ Painel Administrativo — {{ empresa.nome }}</h2>
+
+<div class="row g-4">
+  <div class="col-md-4">
+    <div class="card p-3 text-center shadow-sm">
+      <h4>{{ clientes }}</h4>
+      <p>Clientes</p>
+      <a href="/clientes/{{ empresa.id }}" class="btn btn-primary w-100">Gerenciar Clientes</a>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card p-3 text-center shadow-sm">
+      <h4>{{ funcionarios }}</h4>
+      <p>Funcionários</p>
+      <a href="/funcionarios/{{ empresa.id }}" class="btn btn-success w-100">Gerenciar Funcionários</a>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card p-3 text-center shadow-sm">
+      <h4>{{ servicos }}</h4>
+      <p>Serviços</p>
+      <a href="/servicos/{{ empresa.id }}" class="btn btn-warning w-100">Gerenciar Serviços</a>
+    </div>
+  </div>
+</div>
+
+<div class="mt-5 text-center">
+  <a href="/" class="btn btn-outline-secondary btn-lg">Sair / Voltar</a>
+</div>
+{% endblock %}
