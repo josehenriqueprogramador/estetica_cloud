@@ -1,37 +1,30 @@
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
-from dotenv import load_dotenv
 
-# Carrega as variáveis do .env
-load_dotenv()
+DB_ENGINE = os.getenv("DB_ENGINE", "mysql")
+DB_USER = os.getenv("DB_USER", "root")
+DB_PASSWORD = os.getenv("DB_PASSWORD", "")
+DB_HOST = os.getenv("DB_HOST", "localhost")
+DB_PORT = os.getenv("DB_PORT", "3306" if DB_ENGINE == "mysql" else "5432")
+DB_NAME = os.getenv("DB_NAME", "estetica_cloud")
 
-# Lê o ambiente atual (local ou produção)
-APP_ENV = os.getenv("APP_ENV", "local").lower()
-
-# Monta a URL do banco de acordo com o ambiente
-if APP_ENV == "production":
-    DATABASE_URL = os.getenv("DATABASE_URL_PROD")
-    print("🌐 Ambiente de produção detectado: Render (PostgreSQL)")
+if DB_ENGINE == "postgresql":
+    DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 else:
-    DATABASE_URL = os.getenv("DATABASE_URL_LOCAL")
-    print("💻 Ambiente local detectado: Termux (MySQL)")
+    DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
-# Verifica se a URL foi configurada
 if not DATABASE_URL:
     raise ValueError("❌ Nenhuma URL de banco de dados configurada no .env!")
 
-# Cria o engine do SQLAlchemy
-engine = create_engine(DATABASE_URL, echo=False)
-
-# Cria sessão e base
+engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
-# Dependência de sessão para rotas FastAPI
 def get_db():
     db = SessionLocal()
     try:
         yield db
     finally:
         db.close()
+
