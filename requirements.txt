@@ -11,3 +11,5 @@ uvicorn
 gunicorn
 uvicorn
 psycopg2-binary
+bcrypt
+passlib[bcrypt]
