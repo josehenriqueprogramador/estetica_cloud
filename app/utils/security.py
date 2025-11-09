@@ -1,16 +1,20 @@
 from passlib.context import CryptContext
+from passlib.handlers.bcrypt import bcrypt
 
-# Usa bcrypt_sha256 para evitar limite de 72 bytes
-pwd_context = CryptContext(schemes=["bcrypt_sha256"], deprecated="auto")
+# Contexto global do Passlib (apenas schemes)
+pwd_context = CryptContext(
+    schemes=["bcrypt"],
+    deprecated="auto"
+)
 
 def hash_password(password: str) -> str:
-    """
-    Recebe uma senha em texto puro e retorna o hash seguro.
-    """
+    """Cria hash bcrypt para a senha fornecida"""
     return pwd_context.hash(password)
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    """
-    Verifica se a senha em texto puro corresponde ao hash armazenado.
-    """
-    return pwd_context.verify(plain_password, hashed_password)
+    """Verifica se a senha fornecida corresponde ao hash armazenado"""
+    try:
+        return pwd_context.verify(plain_password, hashed_password)
+    except Exception:
+        # fallback direto caso a identificação falhe
+        return bcrypt.verify(plain_password, hashed_password)
