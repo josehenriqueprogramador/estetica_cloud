@@ -12,7 +12,7 @@ DB_NAME = os.getenv("DB_NAME", "estetica_cloud")
 if DB_ENGINE == "postgresql":
     DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 else:
-    DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    DATABASE_URL = f"mysql+pymysql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
 if not DATABASE_URL:
     raise ValueError("❌ Nenhuma URL de banco de dados configurada no .env!")

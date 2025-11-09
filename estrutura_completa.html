@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang='pt-br'>
+<head>
+<meta charset='UTF-8'>
+<title>Estrutura Completa do Projeto</title>
+<style>
+body { font-family: Arial, sans-serif; padding: 20px; background: #fefefe; color: #333; }
+ul { margin:0; padding:0; }
+li { margin:2px 0; }
+.folder { cursor: pointer; font-weight: bold; color: #007bff; }
+.file { cursor: pointer; color: #555; }
+pre { background:#f4f4f4; padding:10px; border:1px solid #ccc; overflow:auto; border-radius:4px; }
+</style>
+</head>
+<body>
+<h1>📂 Estrutura Completa do Projeto</h1>
+<p>Clique nas pastas ou arquivos para expandir/contrair.</p>
+<ul style='list-style:none;padding-left:0px;'><li><span class='file' onclick='toggleFile(this)'>📄 .env</span><pre class='file-content' style='display:none; margin-top:5px;'># ====================================================
+# 🌍 CONFIGURAÇÃO DE AMBIENTE - ESTETICA_CLOUD
+# ====================================================
+
+# Ambiente atual: local | production
+APP_ENV=local
+
+# ====================================================
+# 💾 CONFIG LOCAL (MYSQL - TERMUX)
+# ====================================================
+DB_DRIVER_LOCAL=mysql+pymysql
+DB_USER_LOCAL=root
+DB_PASSWORD_LOCAL=
+DB_HOST_LOCAL=localhost
+DB_PORT_LOCAL=3306
+DB_NAME_LOCAL=estetica_cloud
+
+# URL completa (pode ser montada automaticamente)
+DATABASE_URL_LOCAL=\${DB_DRIVER_LOCAL}://\${DB_USER_LOCAL}:\${DB_PASSWORD_LOCAL}@\${DB_HOST_LOCAL}:\${DB_PORT_LOCAL}/\${DB_NAME_LOCAL}
+
+# ====================================================
+# ☁️ CONFIG PRODUÇÃO (POSTGRES - RENDER)
+# ====================================================
+DB_DRIVER_PROD=postgresql+psycopg2
+DB_USER_PROD=db_a3m8_user
+DB_PASSWORD_PROD=9Kkk9oPT6VRTounXRgpYdrueRxEa94fi
+DB_HOST_PROD=dpg-d47r22c9c44c73ccebcg-a.oregon-postgres.render.com
+DB_PORT_PROD=5432
+DB_NAME_PROD=db_a3m8
+
+DATABASE_URL_PROD=\${DB_DRIVER_PROD}://\${DB_USER_PROD}:\${DB_PASSWORD_PROD}@\${DB_HOST_PROD}:\${DB_PORT_PROD}/\${DB_NAME_PROD}
+
+# ====================================================
+# 🔐 OUTRAS CONFIGURAÇÕES
+# ====================================================
+SECRET_KEY=chave_super_secreta_troque_isto
+DEBUG=True
+</pre></li><li><span class='folder' onclick='toggleFolder(this)'>📁 .git</span><ul style='list-style:none;padding-left:20px;'><li><span class='file' onclick='toggleFile(this)'>📄 COMMIT_EDITMSG</span><pre class='file-content' style='display:none; margin-top:5px;'>correção de rotas
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 HEAD</span><pre class='file-content' style='display:none; margin-top:5px;'>ref: refs/heads/master
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 config</span><pre class='file-content' style='display:none; margin-top:5px;'>[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote &quot;origin&quot;]
+	url = https://github.com/josehenriqueprogramador/estetica_cloud.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch &quot;master&quot;]
+	remote = origin
+	merge = refs/heads/master
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 description</span><pre class='file-content' style='display:none; margin-top:5px;'>Unnamed repository; edit this file &#039;description&#039; to name the repository.
+</pre></li><li><span class='folder' onclick='toggleFolder(this)'>📁 hooks</span><ul style='list-style:none;padding-left:40px;'><li><span class='file' onclick='toggleFile(this)'>📄 applypatch-msg.sample</span><pre class='file-content' style='display:none; margin-top:5px;'>#!/data/data/com.termux/files/usr/bin/sh
+#
+# An example hook script to check the commit log message taken by
+# applypatch from an e-mail message.
+#
+# The hook should exit with non-zero status after issuing an
+# appropriate message if it wants to stop the commit.  The hook is
+# allowed to edit the commit message file.
+#
+# To enable this hook, rename this file to &quot;applypatch-msg&quot;.
+
+. git-sh-setup
+commitmsg=&quot;$(git rev-parse --git-path hooks/commit-msg)&quot;
+test -x &quot;$commitmsg&quot; &amp;&amp; exec &quot;$commitmsg&quot; ${1+&quot;$@&quot;}
+:
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 commit-msg.sample</span><pre class='file-content' style='display:none; margin-top:5px;'>#!/data/data/com.termux/files/usr/bin/sh
+#
+# An example hook script to check the commit log message.
+# Called by &quot;git commit&quot; with one argument, the name of the file
+# that has the commit message.  The hook should exit with non-zero
+# status after issuing an appropriate message if it wants to stop the
+# commit.  The hook is allowed to edit the commit message file.
+#
+# To enable this hook, rename this file to &quot;commit-msg&quot;.
+
+# Uncomment the below to add a Signed-off-by line to the message.
+# Doing this in a hook is a bad idea in general, but the prepare-commit-msg
+# hook is more suited to it.
+#
+# SOB=$(git var GIT_AUTHOR_IDENT | sed -n &#039;s/^\(.*&gt;\).*$/Signed-off-by: \1/p&#039;)
+# grep -qs &quot;^$SOB&quot; &quot;$1&quot; || echo &quot;$SOB&quot; &gt;&gt; &quot;$1&quot;
+
+# This example catches duplicate Signed-off-by lines.
+
+test &quot;&quot; = &quot;$(grep &#039;^Signed-off-by: &#039; &quot;$1&quot; |
+	 sort | uniq -c | sed -e &#039;/^[ 	]*1[ 	]/d&#039;)&quot; || {
+	echo &gt;&amp;2 Duplicate Signed-off-by lines.
+	exit 1
+}
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 fsmonitor-watchman.sample</span><pre class='file-content' style='display:none; margin-top:5px;'>#!/data/data/com.termux/files/usr/bin/perl
+
+use strict;
+use warnings;
+use IPC::Open2;
+
+# An example hook script to integrate Watchman
+# (https://facebook.github.io/watchman/) with git to speed up detecting
+# new and modified files.
+#
+# The hook is passed a version (currently 2) and last update token
+# formatted as a string and outputs to stdout a new update token and
+# all files that have been modified since the update token. Paths must
+# be relative to the root of the working tree and separated by a single NUL.
+#
+# To enable this hook, rename this file to &quot;query-watchman&quot; and set
+# &#039;git config core.fsmonitor .git/hooks/query-watchman&#039;
+#
+my ($version, $last_update_token) = @ARGV;
+
+# Uncomment for debugging
+# print STDERR &quot;$0 $version $last_update_token\n&quot;;
+
+# Check the hook interface version
+if ($version ne 2) {
+	die &quot;Unsupported query-fsmonitor hook version &#039;$version&#039;.\n&quot; .
+	    &quot;Falling back to scanning...\n&quot;;
+}
+
+my $git_work_tree = get_working_dir();
+
+my $retry = 1;
+
+my $json_pkg;
+eval {
+	require JSON::XS;
+	$json_pkg = &quot;JSON::XS&quot;;
+	1;
+} or do {
+	require JSON::PP;
+	$json_pkg = &quot;JSON::PP&quot;;
+};
+
+launch_watchman();
+
+sub launch_watchman {
+	my $o = watchman_query();
+	if (is_work_tree_watched($o)) {
+		output_result($o-&gt;{clock}, @{$o-&gt;{files}});
+	}
+}
+
+sub output_result {
+	my ($clockid, @files) = @_;
+
+	# Uncomment for debugging watchman output
+	# open (my $fh, &quot;&gt;&quot;, &quot;.git/watchman-output.out&quot;);
+	# binmode $fh, &quot;:utf8&quot;;
+	# print $fh &quot;$clockid\n@files\n&quot;;
+	# close $fh;
+
+	binmode STDOUT, &quot;:utf8&quot;;
+	print $clockid;
+	print &quot;\0&quot;;
+	local $, = &quot;\0&quot;;
+	print @files;
+}
+
+sub watchman_clock {
+	my $response = qx/watchman clock &quot;$git_work_tree&quot;/;
+	die &quot;Failed to get clock id on &#039;$git_work_tree&#039;.\n&quot; .
+		&quot;Falling back to scanning...\n&quot; if $? != 0;
+
+	return $json_pkg-&gt;new-&gt;utf8-&gt;decode($response);
+}
+
+sub watchman_query {
+	my $pid = open2(\*CHLD_OUT, \*CHLD_IN, &#039;watchman -j --no-pretty&#039;)
+	or die &quot;open2() failed: $!\n&quot; .
+	&quot;Falling back to scanning...\n&quot;;
+
+	# In the query expression below we&#039;re asking for names of files that
+	# changed since $last_update_token but not from the .git folder.
+	#
+	# To accomplish this, we&#039;re using the &quot;since&quot; generator to use the
+	# recency index to select candidate nodes and &quot;fields&quot; to limit the
+	# output to file names only. Then we&#039;re using the &quot;expression&quot; term to
+	# further constrain the results.
+	my $last_update_line = &quot;&quot;;
+	if (substr($last_update_token, 0, 1) eq &quot;c&quot;) {
+		$last_update_token = &quot;\&quot;$last_update_token\&quot;&quot;;
+		$last_update_line = qq[\n&quot;since&quot;: $last_update_token,];
+	}
+	my $query = &lt;&lt;&quot;	END&quot;;
+		[&quot;query&quot;, &quot;$git_work_tree&quot;, {$last_update_line
+			&quot;fields&quot;: [&quot;name&quot;],
+			&quot;expression&quot;: [&quot;not&quot;, [&quot;dirname&quot;, &quot;.git&quot;]]
+		}]
+	END
+
+	# Uncomment for debugging the watchman query
+	# open (my $fh, &quot;&gt;&quot;, &quot;.git/watchman-query.json&quot;);
+	# print $fh $query;
+	# close $fh;
+
+	print CHLD_IN $query;
+	close CHLD_IN;
+	my $response = do {local $/; &lt;CHLD_OUT&gt;};
+
+	# Uncomment for debugging the watch response
+	# open ($fh, &quot;&gt;&quot;, &quot;.git/watchman-response.json&quot;);
+	# print $fh $response;
+	# close $fh;
+
+	die &quot;Watchman: command returned no output.\n&quot; .
+	&quot;Falling back to scanning...\n&quot; if $response eq &quot;&quot;;
+	die &quot;Watchman: command returned invalid output: $response\n&quot; .
+	&quot;Falling back to scanning...\n&quot; unless $response =~ /^\{/;
+
+	return $json_pkg-&gt;new-&gt;utf8-&gt;decode($response);
+}
+
+sub is_work_tree_watched {
+	my ($output) = @_;
+	my $error = $output-&gt;{error};
+	if ($retry &gt; 0 and $error and $error =~ m/unable to resolve root .* directory (.*) is not watched/) {
+		$retry--;
+		my $response = qx/watchman watch &quot;$git_work_tree&quot;/;
+		die &quot;Failed to make watchman watch &#039;$git_work_tree&#039;.\n&quot; .
+		    &quot;Falling back to scanning...\n&quot; if $? != 0;
+		$output = $json_pkg-&gt;new-&gt;utf8-&gt;decode($response);
+		$error = $output-&gt;{error};
+		die &quot;Watchman: $error.\n&quot; .
+		&quot;Falling back to scanning...\n&quot; if $error;
+
+		# Uncomment for debugging watchman output
+		# open (my $fh, &quot;&gt;&quot;, &quot;.git/watchman-output.out&quot;);
+		# close $fh;
+
+		# Watchman will always return all files on the first query so
+		# return the fast &quot;everything is dirty&quot; flag to git and do the
+		# Watchman query just to get it over with now so we won&#039;t pay
+		# the cost in git to look up each individual file.
+		my $o = watchman_clock();
+		$error = $output-&gt;{error};
+
+		die &quot;Watchman: $error.\n&quot; .
+		&quot;Falling back to scanning...\n&quot; if $error;
+
+		output_result($o-&gt;{clock}, (&quot;/&quot;));
+		$last_update_token = $o-&gt;{clock};
+
+		eval { launch_watchman() };
+		return 0;
+	}
+
+	die &quot;Watchman: $error.\n&quot; .
+	&quot;Falling back to scanning...\n&quot; if $error;
+
+	return 1;
+}
+
+sub get_working_dir {
+	my $working_dir;
+	if ($^O =~ &#039;msys&#039; || $^O =~ &#039;cygwin&#039;) {
+		$working_dir = Win32::GetCwd();
+		$working_dir =~ tr/\\/\//;
+	} else {
+		require Cwd;
+		$working_dir = Cwd::cwd();
+	}
+
+	return $working_dir;
+}
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 post-update.sample</span><pre class='file-content' style='display:none; margin-top:5px;'>#!/data/data/com.termux/files/usr/bin/sh
+#
+# An example hook script to prepare a packed repository for use over
+# dumb transports.
+#
+# To enable this hook, rename this file to &quot;post-update&quot;.
+
+exec git update-server-info
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 pre-applypatch.sample</span><pre class='file-content' style='display:none; margin-top:5px;'>#!/data/data/com.termux/files/usr/bin/sh
+#
+# An example hook script to verify what is about to be committed
+# by applypatch from an e-mail message.
+#
+# The hook should exit with non-zero status after issuing an
+# appropriate message if it wants to stop the commit.
+#
+# To enable this hook, rename this file to &quot;pre-applypatch&quot;.
+
+. git-sh-setup
+precommit=&quot;$(git rev-parse --git-path hooks/pre-commit)&quot;
+test -x &quot;$precommit&quot; &amp;&amp; exec &quot;$precommit&quot; ${1+&quot;$@&quot;}
+:
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 pre-commit.sample</span><pre class='file-content' style='display:none; margin-top:5px;'>#!/data/data/com.termux/files/usr/bin/sh
+#
+# An example hook script to verify what is about to be committed.
+# Called by &quot;git commit&quot; with no arguments.  The hook should
+# exit with non-zero status after issuing an appropriate message if
+# it wants to stop the commit.
+#
+# To enable this hook, rename this file to &quot;pre-commit&quot;.
+
+if git rev-parse --verify HEAD &gt;/dev/null 2&gt;&amp;1
+then
+	against=HEAD
+else
+	# Initial commit: diff against an empty tree object
+	against=$(git hash-object -t tree /dev/null)
+fi
+
+# If you want to allow non-ASCII filenames set this variable to true.
+allownonascii=$(git config --type=bool hooks.allownonascii)
+
+# Redirect output to stderr.
+exec 1&gt;&amp;2
+
+# Cross platform projects tend to avoid non-ASCII filenames; prevent
+# them from being added to the repository. We exploit the fact that the
+# printable range starts at the space character and ends with tilde.
+if [ &quot;$allownonascii&quot; != &quot;true&quot; ] &amp;&amp;
+	# Note that the use of brackets around a tr range is ok here, (it&#039;s
+	# even required, for portability to Solaris 10&#039;s /usr/bin/tr), since
+	# the square bracket bytes happen to fall in the designated range.
+	test $(git diff-index --cached --name-only --diff-filter=A -z $against |
+	  LC_ALL=C tr -d &#039;[ -~]\0&#039; | wc -c) != 0
+then
+	cat &lt;&lt;\EOF
+Error: Attempt to add a non-ASCII file name.
+
+This can cause problems if you want to work with people on other platforms.
+
+To be portable it is advisable to rename the file.
+
+If you know what you are doing you can disable this check using:
+
+  git config hooks.allownonascii true
+EOF
+	exit 1
+fi
+
+# If there are whitespace errors, print the offending file names and fail.
+exec git diff-index --check --cached $against --
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 pre-merge-commit.sample</span><pre class='file-content' style='display:none; margin-top:5px;'>#!/data/data/com.termux/files/usr/bin/sh
+#
+# An example hook script to verify what is about to be committed.
+# Called by &quot;git merge&quot; with no arguments.  The hook should
+# exit with non-zero status after issuing an appropriate message to
+# stderr if it wants to stop the merge commit.
+#
+# To enable this hook, rename this file to &quot;pre-merge-commit&quot;.
+
+. git-sh-setup
+test -x &quot;$GIT_DIR/hooks/pre-commit&quot; &amp;&amp;
+        exec &quot;$GIT_DIR/hooks/pre-commit&quot;
+:
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 pre-push.sample</span><pre class='file-content' style='display:none; margin-top:5px;'>#!/data/data/com.termux/files/usr/bin/sh
+
+# An example hook script to verify what is about to be pushed.  Called by &quot;git
+# push&quot; after it has checked the remote status, but before anything has been
+# pushed.  If this script exits with a non-zero status nothing will be pushed.
+#
+# This hook is called with the following parameters:
+#
+# $1 -- Name of the remote to which the push is being done
+# $2 -- URL to which the push is being done
+#
+# If pushing without using a named remote those arguments will be equal.
+#
+# Information about the commits which are being pushed is supplied as lines to
+# the standard input in the form:
+#
+#   &lt;local ref&gt; &lt;local oid&gt; &lt;remote ref&gt; &lt;remote oid&gt;
+#
+# This sample shows how to prevent push of commits where the log message starts
+# with &quot;WIP&quot; (work in progress).
+
+remote=&quot;$1&quot;
+url=&quot;$2&quot;
+
+zero=$(git hash-object --stdin &lt;/dev/null | tr &#039;[0-9a-f]&#039; &#039;0&#039;)
+
+while read local_ref local_oid remote_ref remote_oid
+do
+	if test &quot;$local_oid&quot; = &quot;$zero&quot;
+	then
+		# Handle delete
+		:
+	else
+		if test &quot;$remote_oid&quot; = &quot;$zero&quot;
+		then
+			# New branch, examine all commits
+			range=&quot;$local_oid&quot;
+		else
+			# Update to existing branch, examine new commits
+			range=&quot;$remote_oid..$local_oid&quot;
+		fi
+
+		# Check for WIP commit
+		commit=$(git rev-list -n 1 --grep &#039;^WIP&#039; &quot;$range&quot;)
+		if test -n &quot;$commit&quot;
+		then
+			echo &gt;&amp;2 &quot;Found WIP commit in $local_ref, not pushing&quot;
+			exit 1
+		fi
+	fi
+done
+
+exit 0
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 pre-rebase.sample</span><pre class='file-content' style='display:none; margin-top:5px;'>#!/data/data/com.termux/files/usr/bin/sh
+#
+# Copyright (c) 2006, 2008 Junio C Hamano
+#
+# The &quot;pre-rebase&quot; hook is run just before &quot;git rebase&quot; starts doing
+# its job, and can prevent the command from running by exiting with
+# non-zero status.
+#
+# The hook is called with the following parameters:
+#
+# $1 -- the upstream the series was forked from.
+# $2 -- the branch being rebased (or empty when rebasing the current branch).
+#
+# This sample shows how to prevent topic branches that are already
+# merged to &#039;next&#039; branch from getting rebased, because allowing it
+# would result in rebasing already published history.
+
+publish=next
+basebranch=&quot;$1&quot;
+if test &quot;$#&quot; = 2
+then
+	topic=&quot;refs/heads/$2&quot;
+else
+	topic=`git symbolic-ref HEAD` ||
+	exit 0 ;# we do not interrupt rebasing detached HEAD
+fi
+
+case &quot;$topic&quot; in
+refs/heads/??/*)
+	;;
+*)
+	exit 0 ;# we do not interrupt others.
+	;;
+esac
+
+# Now we are dealing with a topic branch being rebased
+# on top of master.  Is it OK to rebase it?
+
+# Does the topic really exist?
+git show-ref -q &quot;$topic&quot; || {
+	echo &gt;&amp;2 &quot;No such branch $topic&quot;
+	exit 1
+}
+
+# Is topic fully merged to master?
+not_in_master=`git rev-list --pretty=oneline ^master &quot;$topic&quot;`
+if test -z &quot;$not_in_master&quot;
+then
+	echo &gt;&amp;2 &quot;$topic is fully merged to master; better remove it.&quot;
+	exit 1 ;# we could allow it, but there is no point.
+fi
+
+# Is topic ever merged to next?  If so you should not be rebasing it.
+only_next_1=`git rev-list ^master &quot;^$topic&quot; ${publish} | sort`
+only_next_2=`git rev-list ^master           ${publish} | sort`
+if test &quot;$only_next_1&quot; = &quot;$only_next_2&quot;
+then
+	not_in_topic=`git rev-list &quot;^$topic&quot; master`
+	if test -z &quot;$not_in_topic&quot;
+	then
+		echo &gt;&amp;2 &quot;$topic is already up to date with master&quot;
+		exit 1 ;# we could allow it, but there is no point.
+	else
+		exit 0
+	fi
+else
+	not_in_next=`git rev-list --pretty=oneline ^${publish} &quot;$topic&quot;`
+	/data/data/com.termux/files/usr/bin/perl -e &#039;
+		my $topic = $ARGV[0];
+		my $msg = &quot;* $topic has commits already merged to public branch:\n&quot;;
+		my (%not_in_next) = map {
+			/^([0-9a-f]+) /;
+			($1 =&gt; 1);
+		} split(/\n/, $ARGV[1]);
+		for my $elem (map {
+				/^([0-9a-f]+) (.*)$/;
+				[$1 =&gt; $2];
+			} split(/\n/, $ARGV[2])) {
+			if (!exists $not_in_next{$elem-&gt;[0]}) {
+				if ($msg) {
+					print STDERR $msg;
+					undef $msg;
+				}
+				print STDERR &quot; $elem-&gt;[1]\n&quot;;
+			}
+		}
+	&#039; &quot;$topic&quot; &quot;$not_in_next&quot; &quot;$not_in_master&quot;
+	exit 1
+fi
+
+&lt;&lt;\DOC_END
+
+This sample hook safeguards topic branches that have been
+published from being rewound.
+
+The workflow assumed here is:
+
+ * Once a topic branch forks from &quot;master&quot;, &quot;master&quot; is never
+   merged into it again (either directly or indirectly).
+
+ * Once a topic branch is fully cooked and merged into &quot;master&quot;,
+   it is deleted.  If you need to build on top of it to correct
+   earlier mistakes, a new topic branch is created by forking at
+   the tip of the &quot;master&quot;.  This is not strictly necessary, but
+   it makes it easier to keep your history simple.
+
+ * Whenever you need to test or publish your changes to topic
+   branches, merge them into &quot;next&quot; branch.
+
+The script, being an example, hardcodes the publish branch name
+to be &quot;next&quot;, but it is trivial to make it configurable via
+$GIT_DIR/config mechanism.
+
+With this workflow, you would want to know:
+
+(1) ... if a topic branch has ever been merged to &quot;next&quot;.  Young
+    topic branches can have stupid mistakes you would rather
+    clean up before publishing, and things that have not been
+    merged into other branches can be easily rebased without
+    affecting other people.  But once it is published, you would
+    not want to rewind it.
+
+(2) ... if a topic branch has been fully merged to &quot;master&quot;.
+    Then you can delete it.  More importantly, you should not
+    build on top of it -- other people may already want to
+    change things related to the topic as patches against your
+    &quot;master&quot;, so if you need further changes, it is better to
+    fork the topic (perhaps with the same name) afresh from the
+    tip of &quot;master&quot;.
+
+Let&#039;s look at this example:
+
+		   o---o---o---o---o---o---o---o---o---o &quot;next&quot;
+		  /       /           /           /
+		 /   a---a---b A     /           /
+		/   /               /           /
+	       /   /   c---c---c---c B         /
+	      /   /   /             \         /
+	     /   /   /   b---b C     \       /
+	    /   /   /   /             \     /
+    ---o---o---o---o---o---o---o---o---o---o---o &quot;master&quot;
+
+
+A, B and C are topic branches.
+
+ * A has one fix since it was merged up to &quot;next&quot;.
+
+ * B has finished.  It has been fully merged up to &quot;master&quot; and &quot;next&quot;,
+   and is ready to be deleted.
+
+ * C has not merged to &quot;next&quot; at all.
+
+We would want to allow C to be rebased, refuse A, and encourage
+B to be deleted.
+
+To compute (1):
+
+	git rev-list ^master ^topic next
+	git rev-list ^master        next
+
+	if these match, topic has not merged in next at all.
+
+To compute (2):
+
+	git rev-list master..topic
+
+	if this is empty, it is fully merged to &quot;master&quot;.
+
+DOC_END
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 pre-receive.sample</span><pre class='file-content' style='display:none; margin-top:5px;'>#!/data/data/com.termux/files/usr/bin/sh
+#
+# An example hook script to make use of push options.
+# The example simply echoes all push options that start with &#039;echoback=&#039;
+# and rejects all pushes when the &quot;reject&quot; push option is used.
+#
+# To enable this hook, rename this file to &quot;pre-receive&quot;.
+
+if test -n &quot;$GIT_PUSH_OPTION_COUNT&quot;
+then
+	i=0
+	while test &quot;$i&quot; -lt &quot;$GIT_PUSH_OPTION_COUNT&quot;
+	do
+		eval &quot;value=\$GIT_PUSH_OPTION_$i&quot;
+		case &quot;$value&quot; in
+		echoback=*)
+			echo &quot;echo from the pre-receive-hook: ${value#*=}&quot; &gt;&amp;2
+			;;
+		reject)
+			exit 1
+		esac
+		i=$((i + 1))
+	done
+fi
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 prepare-commit-msg.sample</span><pre class='file-content' style='display:none; margin-top:5px;'>#!/data/data/com.termux/files/usr/bin/sh
+#
+# An example hook script to prepare the commit log message.
+# Called by &quot;git commit&quot; with the name of the file that has the
+# commit message, followed by the description of the commit
+# message&#039;s source.  The hook&#039;s purpose is to edit the commit
+# message file.  If the hook fails with a non-zero status,
+# the commit is aborted.
+#
+# To enable this hook, rename this file to &quot;prepare-commit-msg&quot;.
+
+# This hook includes three examples. The first one removes the
+# &quot;# Please enter the commit message...&quot; help message.
+#
+# The second includes the output of &quot;git diff --name-status -r&quot;
+# into the message, just before the &quot;git status&quot; output.  It is
+# commented because it doesn&#039;t cope with --amend or with squashed
+# commits.
+#
+# The third example adds a Signed-off-by line to the message, that can
+# still be edited.  This is rarely a good idea.
+
+COMMIT_MSG_FILE=$1
+COMMIT_SOURCE=$2
+SHA1=$3
+
+/data/data/com.termux/files/usr/bin/perl -i.bak -ne &#039;print unless(m/^. Please enter the commit message/..m/^#$/)&#039; &quot;$COMMIT_MSG_FILE&quot;
+
+# case &quot;$COMMIT_SOURCE,$SHA1&quot; in
+#  ,|template,)
+#    /data/data/com.termux/files/usr/bin/perl -i.bak -pe &#039;
+#       print &quot;\n&quot; . `git diff --cached --name-status -r`
+# 	 if /^#/ &amp;&amp; $first++ == 0&#039; &quot;$COMMIT_MSG_FILE&quot; ;;
+#  *) ;;
+# esac
+
+# SOB=$(git var GIT_COMMITTER_IDENT | sed -n &#039;s/^\(.*&gt;\).*$/Signed-off-by: \1/p&#039;)
+# git interpret-trailers --in-place --trailer &quot;$SOB&quot; &quot;$COMMIT_MSG_FILE&quot;
+# if test -z &quot;$COMMIT_SOURCE&quot;
+# then
+#   /data/data/com.termux/files/usr/bin/perl -i.bak -pe &#039;print &quot;\n&quot; if !$first_line++&#039; &quot;$COMMIT_MSG_FILE&quot;
+# fi
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 push-to-checkout.sample</span><pre class='file-content' style='display:none; margin-top:5px;'>#!/data/data/com.termux/files/usr/bin/sh
+
+# An example hook script to update a checked-out tree on a git push.
+#
+# This hook is invoked by git-receive-pack(1) when it reacts to git
+# push and updates reference(s) in its repository, and when the push
+# tries to update the branch that is currently checked out and the
+# receive.denyCurrentBranch configuration variable is set to
+# updateInstead.
+#
+# By default, such a push is refused if the working tree and the index
+# of the remote repository has any difference from the currently
+# checked out commit; when both the working tree and the index match
+# the current commit, they are updated to match the newly pushed tip
+# of the branch. This hook is to be used to override the default
+# behaviour; however the code below reimplements the default behaviour
+# as a starting point for convenient modification.
+#
+# The hook receives the commit with which the tip of the current
+# branch is going to be updated:
+commit=$1
+
+# It can exit with a non-zero status to refuse the push (when it does
+# so, it must not modify the index or the working tree).
+die () {
+	echo &gt;&amp;2 &quot;$*&quot;
+	exit 1
+}
+
+# Or it can make any necessary changes to the working tree and to the
+# index to bring them to the desired state when the tip of the current
+# branch is updated to the new commit, and exit with a zero status.
+#
+# For example, the hook can simply run git read-tree -u -m HEAD &quot;$1&quot;
+# in order to emulate git fetch that is run in the reverse direction
+# with git push, as the two-tree form of git read-tree -u -m is
+# essentially the same as git switch or git checkout that switches
+# branches while keeping the local changes in the working tree that do
+# not interfere with the difference between the branches.
+
+# The below is a more-or-less exact translation to shell of the C code
+# for the default behaviour for git&#039;s push-to-checkout hook defined in
+# the push_to_deploy() function in builtin/receive-pack.c.
+#
+# Note that the hook will be executed from the repository directory,
+# not from the working tree, so if you want to perform operations on
+# the working tree, you will have to adapt your code accordingly, e.g.
+# by adding &quot;cd ..&quot; or using relative paths.
+
+if ! git update-index -q --ignore-submodules --refresh
+then
+	die &quot;Up-to-date check failed&quot;
+fi
+
+if ! git diff-files --quiet --ignore-submodules --
+then
+	die &quot;Working directory has unstaged changes&quot;
+fi
+
+# This is a rough translation of:
+#
+#   head_has_history() ? &quot;HEAD&quot; : EMPTY_TREE_SHA1_HEX
+if git cat-file -e HEAD 2&gt;/dev/null
+then
+	head=HEAD
+else
+	head=$(git hash-object -t tree --stdin &lt;/dev/null)
+fi
+
+if ! git diff-index --quiet --cached --ignore-submodules $head --
+then
+	die &quot;Working directory has staged changes&quot;
+fi
+
+if ! git read-tree -u -m &quot;$commit&quot;
+then
+	die &quot;Could not update working tree to new HEAD&quot;
+fi
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 sendemail-validate.sample</span><pre class='file-content' style='display:none; margin-top:5px;'>#!/data/data/com.termux/files/usr/bin/sh
+
+# An example hook script to validate a patch (and/or patch series) before
+# sending it via email.
+#
+# The hook should exit with non-zero status after issuing an appropriate
+# message if it wants to prevent the email(s) from being sent.
+#
+# To enable this hook, rename this file to &quot;sendemail-validate&quot;.
+#
+# By default, it will only check that the patch(es) can be applied on top of
+# the default upstream branch without conflicts in a secondary worktree. After
+# validation (successful or not) of the last patch of a series, the worktree
+# will be deleted.
+#
+# The following config variables can be set to change the default remote and
+# remote ref that are used to apply the patches against:
+#
+#   sendemail.validateRemote (default: origin)
+#   sendemail.validateRemoteRef (default: HEAD)
+#
+# Replace the TODO placeholders with appropriate checks according to your
+# needs.
+
+validate_cover_letter () {
+	file=&quot;$1&quot;
+	# TODO: Replace with appropriate checks (e.g. spell checking).
+	true
+}
+
+validate_patch () {
+	file=&quot;$1&quot;
+	# Ensure that the patch applies without conflicts.
+	git am -3 &quot;$file&quot; || return
+	# TODO: Replace with appropriate checks for this patch
+	# (e.g. checkpatch.pl).
+	true
+}
+
+validate_series () {
+	# TODO: Replace with appropriate checks for the whole series
+	# (e.g. quick build, coding style checks, etc.).
+	true
+}
+
+# main -------------------------------------------------------------------------
+
+if test &quot;$GIT_SENDEMAIL_FILE_COUNTER&quot; = 1
+then
+	remote=$(git config --default origin --get sendemail.validateRemote) &amp;&amp;
+	ref=$(git config --default HEAD --get sendemail.validateRemoteRef) &amp;&amp;
+	worktree=$(mktemp --tmpdir -d sendemail-validate.XXXXXXX) &amp;&amp;
+	git worktree add -fd --checkout &quot;$worktree&quot; &quot;refs/remotes/$remote/$ref&quot; &amp;&amp;
+	git config --replace-all sendemail.validateWorktree &quot;$worktree&quot;
+else
+	worktree=$(git config --get sendemail.validateWorktree)
+fi || {
+	echo &quot;sendemail-validate: error: failed to prepare worktree&quot; &gt;&amp;2
+	exit 1
+}
+
+unset GIT_DIR GIT_WORK_TREE
+cd &quot;$worktree&quot; &amp;&amp;
+
+if grep -q &quot;^diff --git &quot; &quot;$1&quot;
+then
+	validate_patch &quot;$1&quot;
+else
+	validate_cover_letter &quot;$1&quot;
+fi &amp;&amp;
+
+if test &quot;$GIT_SENDEMAIL_FILE_COUNTER&quot; = &quot;$GIT_SENDEMAIL_FILE_TOTAL&quot;
+then
+	git config --unset-all sendemail.validateWorktree &amp;&amp;
+	trap &#039;git worktree remove -ff &quot;$worktree&quot;&#039; EXIT &amp;&amp;
+	validate_series
+fi
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 update.sample</span><pre class='file-content' style='display:none; margin-top:5px;'>#!/data/data/com.termux/files/usr/bin/sh
+#
+# An example hook script to block unannotated tags from entering.
+# Called by &quot;git receive-pack&quot; with arguments: refname sha1-old sha1-new
+#
+# To enable this hook, rename this file to &quot;update&quot;.
+#
+# Config
+# ------
+# hooks.allowunannotated
+#   This boolean sets whether unannotated tags will be allowed into the
+#   repository.  By default they won&#039;t be.
+# hooks.allowdeletetag
+#   This boolean sets whether deleting tags will be allowed in the
+#   repository.  By default they won&#039;t be.
+# hooks.allowmodifytag
+#   This boolean sets whether a tag may be modified after creation. By default
+#   it won&#039;t be.
+# hooks.allowdeletebranch
+#   This boolean sets whether deleting branches will be allowed in the
+#   repository.  By default they won&#039;t be.
+# hooks.denycreatebranch
+#   This boolean sets whether remotely creating branches will be denied
+#   in the repository.  By default this is allowed.
+#
+
+# --- Command line
+refname=&quot;$1&quot;
+oldrev=&quot;$2&quot;
+newrev=&quot;$3&quot;
+
+# --- Safety check
+if [ -z &quot;$GIT_DIR&quot; ]; then
+	echo &quot;Don&#039;t run this script from the command line.&quot; &gt;&amp;2
+	echo &quot; (if you want, you could supply GIT_DIR then run&quot; &gt;&amp;2
+	echo &quot;  $0 &lt;ref&gt; &lt;oldrev&gt; &lt;newrev&gt;)&quot; &gt;&amp;2
+	exit 1
+fi
+
+if [ -z &quot;$refname&quot; -o -z &quot;$oldrev&quot; -o -z &quot;$newrev&quot; ]; then
+	echo &quot;usage: $0 &lt;ref&gt; &lt;oldrev&gt; &lt;newrev&gt;&quot; &gt;&amp;2
+	exit 1
+fi
+
+# --- Config
+allowunannotated=$(git config --type=bool hooks.allowunannotated)
+allowdeletebranch=$(git config --type=bool hooks.allowdeletebranch)
+denycreatebranch=$(git config --type=bool hooks.denycreatebranch)
+allowdeletetag=$(git config --type=bool hooks.allowdeletetag)
+allowmodifytag=$(git config --type=bool hooks.allowmodifytag)
+
+# check for no description
+projectdesc=$(sed -e &#039;1q&#039; &quot;$GIT_DIR/description&quot;)
+case &quot;$projectdesc&quot; in
+&quot;Unnamed repository&quot;* | &quot;&quot;)
+	echo &quot;*** Project description file hasn&#039;t been set&quot; &gt;&amp;2
+	exit 1
+	;;
+esac
+
+# --- Check types
+# if $newrev is 0000...0000, it&#039;s a commit to delete a ref.
+zero=$(git hash-object --stdin &lt;/dev/null | tr &#039;[0-9a-f]&#039; &#039;0&#039;)
+if [ &quot;$newrev&quot; = &quot;$zero&quot; ]; then
+	newrev_type=delete
+else
+	newrev_type=$(git cat-file -t $newrev)
+fi
+
+case &quot;$refname&quot;,&quot;$newrev_type&quot; in
+	refs/tags/*,commit)
+		# un-annotated tag
+		short_refname=${refname##refs/tags/}
+		if [ &quot;$allowunannotated&quot; != &quot;true&quot; ]; then
+			echo &quot;*** The un-annotated tag, $short_refname, is not allowed in this repository&quot; &gt;&amp;2
+			echo &quot;*** Use &#039;git tag [ -a | -s ]&#039; for tags you want to propagate.&quot; &gt;&amp;2
+			exit 1
+		fi
+		;;
+	refs/tags/*,delete)
+		# delete tag
+		if [ &quot;$allowdeletetag&quot; != &quot;true&quot; ]; then
+			echo &quot;*** Deleting a tag is not allowed in this repository&quot; &gt;&amp;2
+			exit 1
+		fi
+		;;
+	refs/tags/*,tag)
+		# annotated tag
+		if [ &quot;$allowmodifytag&quot; != &quot;true&quot; ] &amp;&amp; git rev-parse $refname &gt; /dev/null 2&gt;&amp;1
+		then
+			echo &quot;*** Tag &#039;$refname&#039; already exists.&quot; &gt;&amp;2
+			echo &quot;*** Modifying a tag is not allowed in this repository.&quot; &gt;&amp;2
+			exit 1
+		fi
+		;;
+	refs/heads/*,commit)
+		# branch
+		if [ &quot;$oldrev&quot; = &quot;$zero&quot; -a &quot;$denycreatebranch&quot; = &quot;true&quot; ]; then
+			echo &quot;*** Creating a branch is not allowed in this repository&quot; &gt;&amp;2
+			exit 1
+		fi
+		;;
+	refs/heads/*,delete)
+		# delete branch
+		if [ &quot;$allowdeletebranch&quot; != &quot;true&quot; ]; then
+			echo &quot;*** Deleting a branch is not allowed in this repository&quot; &gt;&amp;2
+			exit 1
+		fi
+		;;
+	refs/remotes/*,commit)
+		# tracking branch
+		;;
+	refs/remotes/*,delete)
+		# delete tracking branch
+		if [ &quot;$allowdeletebranch&quot; != &quot;true&quot; ]; then
+			echo &quot;*** Deleting a tracking branch is not allowed in this repository&quot; &gt;&amp;2
+			exit 1
+		fi
+		;;
+	*)
+		# Anything else (is there anything else?)
+		echo &quot;*** Update hook: unknown type of update to ref $refname of type $newrev_type&quot; &gt;&amp;2
+		exit 1
+		;;
+esac
+
+# --- Finished
+exit 0
+</pre></li></ul></li><li><span class='file' onclick='toggleFile(this)'>📄 index</span><pre class='file-content' style='display:none; margin-top:5px;'>DIRC      i�N��li�N��l  �? �0  ��  (+  (+   ���Bf4%�1�qk�,���Gi 
+.gitignore        i]0(�� i]0(��   �? &quot;�  ��  (+  (+   �W�\��&#039;����ho7�9�� app/__init__.py   i��^�i��^�  �? &quot;�  ��  (+  (+  �H�X�n�bu�d���̇9 app/database.py   i]0,� i]0,�   �? &quot;Q  ��  (+  (+  �.Fq� ^��(�0��mD�� app/models/models.py      i]0/ޑ i]0/ޑ   �? !�  ��  (+  (+   (�vHk�����
+���I app/routes/__init__.py    i]02� i]02�   �? &quot;m  ��  (+  (+  ���T]����偗$����(h app/routes/auth.py        i����i����  �? +�  ��  (+  (+  ;h����Y	�lU�dI#� app/routes/clientes.py    i[v��i[v��  �? !�  ��  (+  (+  �A�9�O^t��!۲��Z8���&lt; app/routes/dashboard.py   i]01�� i]01��   �? !�  ��  (+  (+  �x�������r��R���1 app/routes/empresas.py    i��K�i��K�  �? :  ��  (+  (+  j�A��pi�v��/3[�)�ߐ app/routes/funcionarios.py        i��+�6i��+�6  �? �  ��  (+  (+  P{�/��v��%1����j� �T app/routes/servicos.py    i_�
+	i_�
+	  �? �G  ��  (+  (+  ��R7SԴ�	�#$E�	
+��b app/templates/base.html   i_���i_���  �? I  ��  (+  (+  �3�Mq�ճ��{.vR�)�^t� app/templates/clientes.html       i_���i_���  �? !�  ��  (+  (+  1g��C���Iw�̋�+W��� app/templates/dashboard.html      i��:~&gt;�i��:~&gt;�  �? �  ��  (+  (+  ̗p7�Qw@�c��u��}�� app/templates/funcionarios.html   i]06{ i]06{   �? &quot;B  ��  (+  (+  s�TM.Y���O&lt;�p��(�&#039; app/templates/home.html   i]08s� i]08s�   �? #  ��  (+  (+  m\EW��}��ޟ��mW,&#039;9 app/templates/login.html  i�c(_�=i�c(_�=  �? �G  ��  (+  (+  �/���m�~�ÍD�����1 app/templates/servicos.html       i�-[}i�-[}  �? !�  ��  (+  (+  �(�x&quot;�� �T�N��D  app/utils/security.py     is)?�is)?�  �? !�  ��  (+  (+  &#039;cƮW�f��H��G��!� main.py   iڅ7piڅ7p  �? !�  ��  (+  (+   �du�����m��U��Ԟ�&#039;� requirements.txt  i�v)}�Ci�v)}�C  �?   ��  (+  (+  �_�3�̎�z�S�Z:g� sync_mysql_to_postgres.py i�,�i�,�  �? �  ��  (+  (+  t��B�p��(�9�����C sync_mysql_to_postgres.py.bak     TREE   � 23 1
+|UU��e��f��� ș�oapp 18 4
+�g��m*�o�+5�l��xutils 1 0
+AC�
+���)���W�models 1 0
+�&amp;X㟄st?�P&amp;�&amp;Ba7�routes 7 0
+���zѡm���ʂ�XY���utemplates 7 0
+X̮(-J���RQ�Z�g�ɑ�0v�´S�,&lt;	&#039;��]�]%Z</pre></li><li><span class='folder' onclick='toggleFolder(this)'>📁 info</span><ul style='list-style:none;padding-left:40px;'><li><span class='file' onclick='toggleFile(this)'>📄 exclude</span><pre class='file-content' style='display:none; margin-top:5px;'># git ls-files --others --exclude-from=.git/info/exclude
+# Lines that start with &#039;#&#039; are comments.
+# For a project mostly in C, the following would be a good set of
+# exclude patterns (uncomment them if you want to use them):
+# *.[oa]
+# *~
+</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 logs</span><ul style='list-style:none;padding-left:40px;'><li><span class='file' onclick='toggleFile(this)'>📄 HEAD</span><pre class='file-content' style='display:none; margin-top:5px;'>0000000000000000000000000000000000000000 e5de1972076137fc13fd90d2e143054e5e183e77 josehenriqueprogramador &lt;josehenriqueprogramador@gmail.com&gt; 1762618371 -0300	commit (initial): Primeiro commit do projeto Estetica Cloud
+e5de1972076137fc13fd90d2e143054e5e183e77 0c55ea81083abfdfb7658dcd8eaab112a4b94c0c josehenriqueprogramador &lt;josehenriqueprogramador@gmail.com&gt; 1762639241 -0300	commit: Configuração: suporte MySQL local + PostgreSQL Render
+0c55ea81083abfdfb7658dcd8eaab112a4b94c0c 4d023215e807806d87774793674da6e4327d5fb4 josehenriqueprogramador &lt;josehenriqueprogramador@gmail.com&gt; 1762641349 -0300	commit: Adiciona gunicorn e uvicorn ao requirements.txt
+4d023215e807806d87774793674da6e4327d5fb4 9f34423331070e29bda7252b8c42e9096cf360b6 josehenriqueprogramador &lt;josehenriqueprogramador@gmail.com&gt; 1762643783 -0300	commit: correção database.py
+9f34423331070e29bda7252b8c42e9096cf360b6 d80457dc7dbfabd7a39e54bb3e3bc3cba682134e josehenriqueprogramador &lt;josehenriqueprogramador@gmail.com&gt; 1762646127 -0300	commit: add psycopg2-binary dependency
+d80457dc7dbfabd7a39e54bb3e3bc3cba682134e 437c2e77c2c8bc77ebc2352192e87fe7e9d665b9 josehenriqueprogramador &lt;josehenriqueprogramador@gmail.com&gt; 1762646679 -0300	commit: add bcrypt dependencies
+437c2e77c2c8bc77ebc2352192e87fe7e9d665b9 9b5d3d17ba118e364e7052e5fca34cbe3142516e josehenriqueprogramador &lt;josehenriqueprogramador@gmail.com&gt; 1762648371 -0300	commit: Fix: limita senha a 72 bytes para compatibilidade com bcrypt
+9b5d3d17ba118e364e7052e5fca34cbe3142516e 319cfe6db3898e1aebd19527788416667856dfe0 josehenriqueprogramador &lt;josehenriqueprogramador@gmail.com&gt; 1762695924 -0300	commit: correção de rotas
+</pre></li><li><span class='folder' onclick='toggleFolder(this)'>📁 refs</span><ul style='list-style:none;padding-left:60px;'><li><span class='folder' onclick='toggleFolder(this)'>📁 heads</span><ul style='list-style:none;padding-left:80px;'><li><span class='file' onclick='toggleFile(this)'>📄 master</span><pre class='file-content' style='display:none; margin-top:5px;'>0000000000000000000000000000000000000000 e5de1972076137fc13fd90d2e143054e5e183e77 josehenriqueprogramador &lt;josehenriqueprogramador@gmail.com&gt; 1762618371 -0300	commit (initial): Primeiro commit do projeto Estetica Cloud
+e5de1972076137fc13fd90d2e143054e5e183e77 0c55ea81083abfdfb7658dcd8eaab112a4b94c0c josehenriqueprogramador &lt;josehenriqueprogramador@gmail.com&gt; 1762639241 -0300	commit: Configuração: suporte MySQL local + PostgreSQL Render
+0c55ea81083abfdfb7658dcd8eaab112a4b94c0c 4d023215e807806d87774793674da6e4327d5fb4 josehenriqueprogramador &lt;josehenriqueprogramador@gmail.com&gt; 1762641349 -0300	commit: Adiciona gunicorn e uvicorn ao requirements.txt
+4d023215e807806d87774793674da6e4327d5fb4 9f34423331070e29bda7252b8c42e9096cf360b6 josehenriqueprogramador &lt;josehenriqueprogramador@gmail.com&gt; 1762643783 -0300	commit: correção database.py
+9f34423331070e29bda7252b8c42e9096cf360b6 d80457dc7dbfabd7a39e54bb3e3bc3cba682134e josehenriqueprogramador &lt;josehenriqueprogramador@gmail.com&gt; 1762646127 -0300	commit: add psycopg2-binary dependency
+d80457dc7dbfabd7a39e54bb3e3bc3cba682134e 437c2e77c2c8bc77ebc2352192e87fe7e9d665b9 josehenriqueprogramador &lt;josehenriqueprogramador@gmail.com&gt; 1762646679 -0300	commit: add bcrypt dependencies
+437c2e77c2c8bc77ebc2352192e87fe7e9d665b9 9b5d3d17ba118e364e7052e5fca34cbe3142516e josehenriqueprogramador &lt;josehenriqueprogramador@gmail.com&gt; 1762648371 -0300	commit: Fix: limita senha a 72 bytes para compatibilidade com bcrypt
+9b5d3d17ba118e364e7052e5fca34cbe3142516e 319cfe6db3898e1aebd19527788416667856dfe0 josehenriqueprogramador &lt;josehenriqueprogramador@gmail.com&gt; 1762695924 -0300	commit: correção de rotas
+</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 remotes</span><ul style='list-style:none;padding-left:80px;'><li><span class='folder' onclick='toggleFolder(this)'>📁 origin</span><ul style='list-style:none;padding-left:100px;'><li><span class='file' onclick='toggleFile(this)'>📄 master</span><pre class='file-content' style='display:none; margin-top:5px;'>0000000000000000000000000000000000000000 e5de1972076137fc13fd90d2e143054e5e183e77 josehenriqueprogramador &lt;josehenriqueprogramador@gmail.com&gt; 1762618375 -0300	update by push
+e5de1972076137fc13fd90d2e143054e5e183e77 0c55ea81083abfdfb7658dcd8eaab112a4b94c0c josehenriqueprogramador &lt;josehenriqueprogramador@gmail.com&gt; 1762639382 -0300	update by push
+0c55ea81083abfdfb7658dcd8eaab112a4b94c0c 4d023215e807806d87774793674da6e4327d5fb4 josehenriqueprogramador &lt;josehenriqueprogramador@gmail.com&gt; 1762641350 -0300	update by push
+4d023215e807806d87774793674da6e4327d5fb4 9f34423331070e29bda7252b8c42e9096cf360b6 josehenriqueprogramador &lt;josehenriqueprogramador@gmail.com&gt; 1762643784 -0300	update by push
+9f34423331070e29bda7252b8c42e9096cf360b6 d80457dc7dbfabd7a39e54bb3e3bc3cba682134e josehenriqueprogramador &lt;josehenriqueprogramador@gmail.com&gt; 1762646140 -0300	update by push
+d80457dc7dbfabd7a39e54bb3e3bc3cba682134e 437c2e77c2c8bc77ebc2352192e87fe7e9d665b9 josehenriqueprogramador &lt;josehenriqueprogramador@gmail.com&gt; 1762646680 -0300	update by push
+437c2e77c2c8bc77ebc2352192e87fe7e9d665b9 9b5d3d17ba118e364e7052e5fca34cbe3142516e josehenriqueprogramador &lt;josehenriqueprogramador@gmail.com&gt; 1762648372 -0300	update by push
+9b5d3d17ba118e364e7052e5fca34cbe3142516e 319cfe6db3898e1aebd19527788416667856dfe0 josehenriqueprogramador &lt;josehenriqueprogramador@gmail.com&gt; 1762695926 -0300	update by push
+</pre></li></ul></li></ul></li></ul></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 objects</span><ul style='list-style:none;padding-left:40px;'><li><span class='folder' onclick='toggleFolder(this)'>📁 03</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 a9544d2e59af019b9d4f3cc370a6eb28890c27</span><pre class='file-content' style='display:none; margin-top:5px;'>x�S;��@%�S4�Kcl\�Z$Aa�,��4mk`&gt;b����$�r��^�+0��Z� �Lu����6���bv�������ۗ+hٚ��0�6��8{�J�1BU] ��i1D�Rly�-R&gt;%X���ӏ�a���ai�V���/p�w��0r��{���=��֥h��x)e�\�.*2zrG,]ge�=&#039;,vO�,�J�#�&amp;�_��j����@����bK�������KQo2�7m�O�(�;&#039;��� �����U),��V�^�N�ã�����u6�!�0�`�lX{W
+I�1͝�m�J�85Tk�m���C�~��$�� ��J�%���Zo�R\�(�A�ˇ�4��Z�Em��^�1&gt;v��T��#������������z���Y���/낶���L&amp;�Z�V�̅1�U�^��7��π�YC�)����K���D���k��0��1��J0�&quot;ys7Xj�$�d����/�ջ)�</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 08</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 324cd77913384c8e35aa52d0fe39c0d1abc39a</span><pre class='file-content' style='display:none; margin-top:5px;'>xe�1�0E�}
+.Ё2q��Һrl�8�|�VB��_/����|�9A�(kXIV����&gt;����y�J�ā�tv2���1�g�5�_0w����`-��&lt;�k��7f</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 0c</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 55ea81083abfdfb7658dcd8eaab112a4b94c0c</span><pre class='file-content' style='display:none; margin-top:5px;'>x��=N�0�aj�bz�ر��
+�$~N0O�Aq&amp;8N�y(8�^�p :��&gt;}��&lt;V��\�����ڐ�)�ཉH5��:c���vI-Tx��.1�`t�hCߡ�S��06V��ck9E[=K�wY��s?6^��2����!�8�v����o�in��Z���ϳ�A�~�B��˗��-R*�����#L����,k
+��+ω��n=</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 0d</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 2a4123c8f1243d18cdbe49b313258a103b904c</span><pre class='file-content' style='display:none; margin-top:5px;'>x��
+� E;���uP����t�VH�*D��ԧ����,.�{�BV\n�S&#039;^[�)�Y��Z7�iF�@&#039;�&gt;�b���D1`��-�qWFL���Tr&quot;ǝ�t����t&gt;SBYy&quot;�-��D���xO��k�8�9c0 �A�ƹ��Y�?�;=�</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 0f</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 4143cd0af09b9210e71d018c0329c086bc57be</span><pre class='file-content' style='display:none; margin-top:5px;'>x+)JMU0�d040031Q(NM.-�,��+�d�#�1�B�M��i�L!W��wQ  a�</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 981580a89826ebe8318834c44dc6dca63aeac6</span><pre class='file-content' style='display:none; margin-top:5px;'>x+)JMU020`040031Q�K�,�L��/JeX��)�DZ��pQa�/�e3z�3M�@!����k�r�?+��ټ?����a��~����yz����օ�K���c�!^����&gt;�C���f����T�0��N���i����KC$�]��D�#Tmqe^r|neqaN|I~|A~qIzQj1Ȃ�,����;t�&amp;�E�]n� �V�</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 27</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 63c6ae57ae669aeb48bcc20d47d9ca2112f18f</span><pre class='file-content' style='display:none; margin-top:5px;'>x}��J�0�=�)���P*�A
+�AAO��e�Lw#iR�T|/�}_�Gpj�뺇�Rf�7_&amp;ߴ���w�bL�0]�C�+�n��v�b&quot;�Kq��~SWc�?���-�n9�7�=�}�O8�}����(b,��*Ac\5�.AYC���)��9�����	FI�	�4�Mni�	�z�5��%r$D~W��Xu�pT�T L���q��R!X�ɨ&quot;�d���1}}�I�Z.���`;�Rɇ�Z���&lt;��R!��ﲄ-�gzKp��,�&lt;je�����_�C1���������9f��9hZ����9nZ���OK]b�4�����JCp�&quot;���&#039; ����A�����&#039;���=|���W��$Z</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 2e</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 46718811005eed12f328e630dbdf6d104485f6</span><pre class='file-content' style='display:none; margin-top:5px;'>x�U;o�0�_qP	P;���Ҥ�nMv�L�-&quot;|(�T��ԃ2S9�`�&quot;�����V�-�V_vFK�o�H��Z��h���jhO&amp;���p��`#46��E����^���?om��hH`õ��=��E�nђ���Q�Z?dm�b�ݥ�&quot;p_Q8uA
+%�Ӡc�^�Kw7��L�׆K4����i]�\��?���Ғ��C��j�L3P�]�|��eѫ�D.&gt;�oki�s�ؒ�pf|�^σ|�
+mEe��ݵ�9 �pm���$��q[d�E���aN6�09	C˰�&lt;F!2(IPCw���x(�	N������J����NT�&lt;�p?�&amp;��,wB&lt;oßP4{=k�z�z:�4/N��8g�o�]�2~o;c�8:&#039;�|Wt�Gml�Y�&lt;/n	U��j&gt;�����T���ҳHy��)���_��J��p��t\iݖ��MxL(����jw��ӹn���&lt;\��p�i_������]����������^١y�6�}���?�Γ�</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 31</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 4693e07bca8d13d0e28da2709f3531d845a726</span><pre class='file-content' style='display:none; margin-top:5px;'>x]P=k�0�_qh��(h���fh��v7rtNUdK��B��U,)N��ǽ�{z�6=&lt;ܯ�gF��*P�5.��������}@jxF���d�k�A��c�1t�_��HԞ�_!���Q;S�f��H�|��AM��UӗX�=zB2=��dR9��-�WW*����5ק���Ǵ�1:�+����)����&lt;G������P�K�4K?��5��d���X����+&amp;1��y��Y��ұ��?�Ű]Ɗ�c�O���lR�[%���|��Mp퉗��譙&lt;2Z���0jZ�i�|�Ns��&lt;�Vd,���G0O��\�_1�</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 9cfe6db3898e1aebd19527788416667856dfe0</span><pre class='file-content' style='display:none; margin-top:5px;'>x����09�
+7 �&#039;^�B���7�cX��8PH�p��I��%�
+=��2�pѶ�Xt�3��������(�
+�wdZ��&amp;����@zr�j�cD��@F��*��:��V^�=�L�S���uʸ�O��P4x�u/��H�5��+�Yۼ̴�w�������b</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 33</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 dc4d71a6d5b3aab77b2e76529d1c29d05e74db</span><pre class='file-content' style='display:none; margin-top:5px;'>x�T�j1��_1r�,1-��^m��J�����J�$�	ƐSo�zϭ��^��A&gt;�#iwq�R
+5ؖ4;��y�F��Ξ�x�=�h��p��2t���n2�P�m��
+��Vhz�_���[:���a�����)�[KY&amp;Ģ���7_�?��|�cI��&quot;��Jzf2���u�۠������\%�4vmt�3��&gt;0h5�~Ɯ���B�OY=��Z���ų��2�U���};Kj��E����(��f�Md.,e%e8��RE+	�Qj�[s��n&lt;�W�)�b��6��7� }��SwW�&gt;�%鹫�������!ސ5z��&amp;�&gt;8�Dy&#039;�4�b#U@��)|��$r�H��B����&quot;v�TA֯_U%��e�����w?�nѧ}ʧU�O1
+�W�&lt;��hA*��[�&lt;��z5��=M��Z�P~���⏱a�d��xO�hr���=^����C��h�a��K#�,б�&quot;gT%���Vz��G!u
+d�hg�&gt;v&#039;����N&lt;���{A�M&quot;9k����:p��[������7�ր�</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 38</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 86c2a0a472560d774ed677692761103d1b3755</span><pre class='file-content' style='display:none; margin-top:5px;'>xe�K� ��)r�.�����|��q�D�E�Xu9o��qr�sY���ԋ|��$���L�$���edn�u[�q�����b)L��|njo8���Q�~�1l</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 3b</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 8bcfa2011248beda2f6c9df69131925b1b1128</span><pre class='file-content' style='display:none; margin-top:5px;'>x+)JMU020`040031Q�K�,�L��/JeX��)�DZ��pQa�/�e3z�3M�@!����k�r�?+��ټ?����a��~����yz����օ�K���c�!^����&gt;�C���f����T�0p�\����3]t�偋�ς�-��K�ϭ,.̉/ɏ/�/.I/J-Y���o�u�3~���d�h���} ],T�</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 daa731d7c90069bde0db047b5814d96b81031c</span><pre class='file-content' style='display:none; margin-top:5px;'>x]Q�j� �ٯO���l�[hOe�=���j˲�^�1[/&gt;�3�Qh+����]��{&quot;w
+��Y����ގ|���3B�5~FT�Y��i�9.�we����܇�α�J�!o�u4e���x78��/L�#&lt;��&gt;B�@�_��v�I+��@H�&amp;�T�SK���%B�Y�%qJ6�j(l�i��Q��%A%�X���J�sD͚��k�2)&lt;)ڜ�����J�d\
+��&#039;ZS�^���8�U�]ˊq�S�^�R�y�RF�?�^����8z�o��+��5()=��8hR����q��^�Jj����H�\�w�
+����</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 41</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 8a399f4f5e7487e221dbb2ae8a5a389880aa3c</span><pre class='file-content' style='display:none; margin-top:5px;'>x�SM�� �ٿqE��Z�Cm�JUvoUea�*^�U�����N{��%x��c�ͣѶA�����u�&gt;(������~�|�c��BGy?J*�^�_l��I?X�ϕ��}=��T,��mȑ�� �A��)WQ�u�2���5��Y�j]����{eMd��@��^f�I�Z4k��BjO�_}��W�V�Y���i��;e+t+�o�ڢp����(���q�?y��ύ�N�e��e�g,E���0t�[��,�7�*
+��[(w ��j��#\	�Y����{���,���RI\��a]�Ju@�nEs�YgA�ݴi,�C�� /
+�p��+i�4�%S%c� � �R�D�CƆ����N�љ�&lt;CF��i{R����-l�ݼ�Ŧ�`נż�I�Ǵ��c�\�:&gt;[�%m�hr���[�pŹ�ȳx}��g����h��h~&lt;�ɑՖ�z&gt;̕�l8y@����\�r�T���4$���`��-�mp�͊,���ǲ��r�</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 43</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 7c2e77c2c8bc77ebc2352192e87fe7e9d665b9</span><pre class='file-content' style='display:none; margin-top:5px;'>x��An�0s�+��)S�
+E2���r������Y`�#��u�9���f&gt;\3M�L3Z1���Ĩ�*��Ƃn�n��J!.I%i�r�Đm���A��H���ǽu�h/�������:Wփ_��n���YZ��S�#b�#@��a��u�����6�MV{�_��dL</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 c384cf3940148cefaf743ba60cb3bd7bd9f36d</span><pre class='file-content' style='display:none; margin-top:5px;'>x+)JMU024b040031Q�����,���+�d�?ӻA�{��,��}�s�B��$�$&amp;%���e9O;p��s��/[�L����ab 
+��)�9��jR�����P[���k&gt;��(��$����i�6�KN�s�%?�^֬`�RQP��[��Rs�omjYr�Ԅ��7�ɺXkQSZ�	���͗��V�^�8h����?��+ ��X0</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 48</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 b21a58dd6e856275e2a164a7d112b308cc8739</span><pre class='file-content' style='display:none; margin-top:5px;'>x���n�@���S�rD�&quot;BAD�����T�*n��Z{�Ɋ�7�+YUހW��xf⸤���7��|�ÿ�M�.�&gt;S��X��5�Z�b�U�LaQx̰ު�Bc�t�2u%����B+���,�`1ϖ���WK���d��(|�c��G�ަ�̀� s��a�I�~[o�O0ޡ���� � #�B��ˮ7C����N�/߄�Jx��P;����U�v�|��A.�ΣW��
+mI?��{jk���@�&quot;�I�I��n7W�O�%f�&#039;�3��U8��/{��*�#˓��G�㥼ط��w��j���u�B�d_�npi��Q���OXa�k*��D�E]��B��K�m��������|J�&lt;�mt��(H;�^�z��H4�����?e)u�v} W���F�`N�O��,K �g2�Fݦ2&#039;�;a|�޶��V�� �c�T��,+�	y�!7��+.�</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 4a</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 a9aa7715fca8429e8e3cefce6eb07500af47bf</span><pre class='file-content' style='display:none; margin-top:5px;'>x+)JMU024b040031Q�����,���+�d�?ӻA�{��,��}�s�B��$�$&amp;%���yl����ךT�ha��B�9δ[� �Bn~JjN1C�Z���-�%�3Ԗ�9%�O�((�/-I-f(y������a���5+ظA����$�Ԝ�[�Z�\=5a��G��k�.�ZAԔ�d-�p�忠��:Ǧ�o����
+ �Wc</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 4d</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 023215e807806d87774793674da6e4327d5fb4</span><pre class='file-content' style='display:none; margin-top:5px;'>x��KN�0DY�}F�	!8J���a{�c#�O$��ؕ^IOU�J�ڧ�E ƴ�MK�H9Nv�I�`�;��|\��Q�:@�sBu4��mO�����(!.d�jY��9���G{�Uj�)�ގN�����Q����[y~��]�Y��I��C�Y�޷̹U�c�̭W�_��t��ܥ����=��l�</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 258540cc776feb1508b6746000b54317ef4d5c</span><pre class='file-content' style='display:none; margin-top:5px;'>x+)JMU041g040031Q�K�,�L��/Je��rT&gt;�Q�V��&gt;��ª]�|L�@!���!���̣���6_�jIKK�+�������WPɠ�|l]���Y�=��u�yJQ�c?TIQjaifQjnj^I�^IE	úM��7��|8�c;�&amp;�	��a�k �k;;</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 58</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 ccae282d4a1cb6c2e75251bc5a996785c99180</span><pre class='file-content' style='display:none; margin-top:5px;'>x+)JMU0�0d040031QHJ,N��(��a�d�qeK}�Ye�nN��3IPE�9��y%����w|�]ݼj{�^Y�\�q%��
+S�3���R *�?�p�*ش۳�͙�K��g��.AU���%g��%e�C��^`��9���k򯏥��j���*��υ:�ye��^�z��s�m,{��ɣU������7�5����vŵ{�w��m��Q���*N-*�L�ٹF�҃�k�zX�2���0��,C `�q</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 59</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 da9fb9188510f20da76329bea44adaecc6fb32</span><pre class='file-content' style='display:none; margin-top:5px;'>x+)JMU020`040031Q�K�,�L��/JeX��)�DZ��pQa�/�e3z�3M�@!����k�r�?+��ټ?����a��~����yz����օ�K���c�!^����&gt;�C���f����T�0X�Z��(����Zy�z����y(Tmqe^r|neqaN|I~|A~qIzQj1Ȃ�,����;t�&amp;�E�]n� �R�</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 5c</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 45578205867da8d6de9fb8041eb76d572c2739</span><pre class='file-content' style='display:none; margin-top:5px;'>x�SM��0f=�xX���ҙь&#039;B��@����6��럪��lXpn�����v�v�X�H��}�+�+���~$�x5}���jmy&amp;��r��uğ�aنJ�g �ERP7*D��-i�o�?9Ȑ��_����,үdjS�Z�! �Z�&gt;Bp^�����B�ڍ&gt;D�֬��!	׵��&quot;�=�]�&amp;B�H���1j�%���`��c�Hyf1-+��P[c���f�dD��Q{G�8��bЗ*X�6|m45���q�y���frH$���QN��%+����+��
+fm0�4�$w؝�������΢,���u�+w�!��N�=�����Tk_F�}hA�d�+�������D���&lt;�4�[�D��y�ی�m;,��XN�?�U56�j��	&amp;03��&amp;`���h�%��&gt;�C���QN��l�t��D��T� =��Uak�d&lt;f�,�SA�!xؠ����NX���R��d+�J�,� ί�ȥP呜�!uK����_�?��!�</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 5d</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 70cf2999c5259a7ab3d42a84666664138e5e76</span><pre class='file-content' style='display:none; margin-top:5px;'>x+)JMU024b040031Q�����,���+�d�?ӻA�{��,��}�s�B��$�$&amp;%���UN8u��ŭ[o��&gt;���fb 
+��)�9��jR�����P[���k&gt;��(��$����i�6�KN�s�%?�^֬`�RQP��[��Rs�omjYr�Ԅ��7�ɺXkQSZ�	���͗��V�^�8h����?��+ AX�</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 64</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 7594f8ae02b7996dfba5558019f6d49ee427f1</span><pre class='file-content' style='display:none; margin-top:5px;'>xe�A�0{�+�͡��zp��1����	q⸻�s���;&lt;~��B�wJ�1��+���0V�x�2�Lŏ��/��l$�U3�OL�ž0w&gt;���V�z�2�!cs8�7�J�@D</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 67</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 f1e843951182bb4977eccc8bd22b57cd1b8ed2</span><pre class='file-content' style='display:none; margin-top:5px;'>x���J�@�=�)�@�۴��%��W��}��m7�aw�*��O�ŃWO����I_�WpҦ5�G/b ��|3�a&amp;U&amp;�v�s6m�x�BsaJ�hf&gt;W!4fA�R�{ /���R��7�NA��6���f��櫄�lf4���2�Γ���+T^W&lt;�Z:o��cs�:�0/b.�u�Z3�!�I P�3�H�+aG��CA:��0lIXp�fB\�t|⬛ S���!��u�j�\WJ�(�̊A/��iQm@��I��&lt;��%��9�O0!�V+Ln��Ij�ן���������$��x0�FS+�ꛕ:�(���nĘpn���	;���T�G��y��&#039;�j���ܵG��=غ�ܓ��B�b��{[gF^�&#039;�,y��.�a����Q��8��z;��d[k</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 68</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 1b14c3f9029fa4ad5909966c0555e46449238c</span><pre class='file-content' style='display:none; margin-top:5px;'>xuSˊ�0��_!|��h6�K0�$�0�n�Q{���#Ɂa�Oے֞Y��QW�JU֠�@�?|&lt;��3d!�Ie&amp;�#�����|KN�w�[�&amp;�2����O�f�&quot;*�T~(�G|���!\�=��� ��O ��s&lt;�F��ib�I�!
+��V`#���L�%6�Q&quot;@A&gt;A��PU~=��hSe�(���4�q��k�qx��MU}Jl�i}8&#039;1��]��J� L�H�BW}_ �&#039;/���m�#ʢ�r��h��7MW|
+	���L��f#6*�a�Ån�|+&amp;��/&lt;yuO��i���1x�����VR.�Ѻhe���uK�ם���lAݑ\�[��a���n��\���.�ɡ�;����r.KYR��o��{���t�E�t$D�.W�2ƚ�%����{��V��&quot;c��.���բӉ���-��}L�&lt;�9��4�2ǵ�3F�Dx{���5�1���П�N��ñ����rS</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 6a</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 4396ce50ce7749ad1ab7f438b58635e7f81898</span><pre class='file-content' style='display:none; margin-top:5px;'>x�S�n�@���Ŗ�. U�����6�%Wk�&#039;+�;aw�;􀸣
+q@�+p̛�&lt;c;!no�b���7�|�ma��W/߼~��� ��q��AS.���t��r�m�iҘ]�O��f[�r#PTt����Rq ��WF���(z&#039;�-����~_����R���M�n��B�4�.����f�s���(����9Ld��ZI��#���8�D�G�`�
+����
+�%�P�%;9��աy�+��cq׻�F|�|��mv�ݜ�-�#Û|v}u�]��i�����3J��X�&amp;PP�\�U� ��G7囹���_��W&#039;��)���zu�o���gH.6����99]���\��kQ�Vz�8T��e9&lt;R���PK�MCgαK�����첩w���.����ڙ����i�-��m�(����.8�G�N���K����x�km.������w����DF&gt;&lt;���b�Z�dm�2�_���j�sI�cw&lt;}:�!Oi%K�&gt;�R�#�y�䕁� ��}�fo#E��sU$i��*wHU0[_����F�Q�����ܪb\�$�(i�</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 74</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 e568b603fda4c86f085663e12ba683203c4472</span><pre class='file-content' style='display:none; margin-top:5px;'>x+)JMU027a040031Q�����,���+�d�-�Ȯ��}��@ײeO=��KK2@J��	����ѶO���|s�FTIrNfj^Ij1H��r1��Ᵹ�lϱ�{*�]�
+U��X����X�R��e9�?������M뺢,f4����K�-(J-NW!%ٴ��޿��2E�W�&amp;��kU�V������X��Vj}k���{�f������,UZ�ZT��Qf�6�A��^��z�75��\ ns</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 78</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 1a1982b2fab00dfd89811c7281d55293ab9d31</span><pre class='file-content' style='display:none; margin-top:5px;'>xuT�n�0�9_qe^)dc/�,��h ���7����m&lt;%qf�����}���ڎ�v�&gt;��}s�9瞛UgV����ų�5=��y5�~4�Û��f땭�Z�n���7���� ]�����Q��f(Aj��h�\��\|�t=D��j|&gt;9~ث~���a�����&lt;[�s�R���kZ��j�K�(�tpk�W�T.�(����{#U禟\4�G���U[��ȩfk���]�ѹ�ʢ��0��q�Y�;�X7N|e$&quot;@;��,&amp;�d��&#039;yr�؝`D�d_�ʢx�:դ���&amp;��鈍8t�,�ZCkz�m�,O��@����FzЍ�nJʃ5 �;:��f,&gt;e������&lt;�&lt;T�BӺ�}G��;����JFゔ}�ĺ��r:��@�3 jdY�#�뺬��Q��95���;������SN��Ѥ��&amp;��� �=�T�@� !J���ѝv1��&amp;�v��i�e���W�_G� ���pmɒ2��5�	*�,�͢�T-!��[�l(�����yBl�&quot;����}-JCQ
+@���}�ƃ�&quot;|U������Q��G�eB&quot;�(%� �g��{��P��=�{8&gt;�qg�VaD��Jh�;%��K�o-	=�u�C+�O���/�C�_</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 79</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 90cadfb631d1b540b5da508745e0de48295c66</span><pre class='file-content' style='display:none; margin-top:5px;'>xe��n�0��짰����]EB*QR��B���Cc���6�P�����L �4\�g��g*m*��׏o�=�q�����M]����-%t/���Pbl;��S�k�+ؘK���«w(+�&amp;�4��Y����blq	#�6����x�֒ YL� �5�a�yQ&lt;?�6W� |D?�+���hS}0n*�7���b)H,8^բ���%g�|���b[&gt;��Q��oys��*M?&amp;����N�t#�3ANc�#����q����&gt;�Jso�[��)ΑƧ&lt;�P~��x0e�4M�K�����8_t~1�pY&amp;�PLv&#039;���7��-d{�CĊq���Xc�
+�轩M�*?K)����@�:��&quot;��m�_��BB�qJY�ъq�d��;b�v�
+�D�iT&#039;�^de����?�� �</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 7b</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 932f93de76b1d72531dbc2ee18e86ada00bd54</span><pre class='file-content' style='display:none; margin-top:5px;'>x�T�n�0��_!�d���@l�ذÐ�(�j�,WR�A�}�%�N�v�a=���H&gt;��+�&#039;W7W7:k4��l�D�XO����1�&quot;x8���j���`j��w������&amp;�=(��=�#�	����̳=sp�a8SJ���/Ao��\XE�`%7�4=�A1/����.���ӯp.��T,i�2�~X^K.&lt;�P���6G���,���;�E^�@��&#039;L7��I�0Q�nw	R���fi��������}��N�Cn�45
+i���F����=�!{I;�P��M� m������@��:Rl�)~Ӆ�eD�T��t�2��=��G�&amp;i������&lt;Q��^����&lt;�-oH&lt;U$�d�.��.E��t|�¬D��juoM�n&lt;&amp;�[Ez��z��7�������!�2̟[8n%gh]y�y���%b�m�b�Ў?1o;e�Ȝ��OUjND��EdB1�|Ǎ�2��B_&gt;E�B��
+�f��v���x���Ū�Wi�Sd�ڶhz�jK�w�_t{�҄�[��o�+�^P٥YOø*�{|$�ùD��e��*q</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 7c</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 5555bbc365a79766b387d200c899956f031b19</span><pre class='file-content' style='display:none; margin-top:5px;'>x+)JMU025g040031Q�K�,�L��/JeX��)�DZ��pQa�/�e3z�3M�@!���ae��c&lt;�ZB���6}��o~Ԍ���&lt;��J��c��ץ�z�����S�B��J�RK3�RsS�J��J*JRJ��XǴ}f�率�߮�{�����2/9&gt;���0&#039;�$?� ��$�(�d����Ʋw��}����\?�*�4!MzI��M��p:Wp��\�U�S6,^�� ��mJ</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 82</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 15eea4f842ce70c4e69d28aa3994b0a3a38b43</span><pre class='file-content' style='display:none; margin-top:5px;'>x�T�n�@��X�%��		�	PA�b��
+Y���]j��m�rBq�7$x !o���&#039;M+����of��fw����q}��r���+��*�);�lJ*S@D .�Ev��.5�E�t��y�&#039;UV#5hͥ��!(�ʖO�)�X��)�y��8�H{Ň��A����������� $[~{����i��I%������~��-�*)�[��0|&lt;���Q����&quot;��7��]�:�z��nY3h�3�TNbײ�àD����q{��n�������0 ^7���������m���L��\��&quot;z-�M4�����M�7�x�D&lt;	��i�&amp;���ߎ���Pkkl������K�%�D�v��SE�Y]�u��V��d���_
+8���
+!�3+����r����T�Y���E�ݮV�Y�ݚ�ͪ�B`���M`�Q�d��S/sc�E|k���%���N��⴬u��UM-K���,b-�����T!��K�o��1׆+Ȝ�T66�H��4l�p�N�a�1���SHk	�&quot;tbd*iqspnLvw�g��2x��4Mg9���m�j�����g���}%��V�W�^����d��,i������r�����&amp;�!&#039;����eYb��k�/
+!c��
+�������S�&#039;�Yl�Uރc`SO��ͅY�V�H#�y�Ѧ��
+�,�2ً&quot;1WR��tWd�	��*e��/��I
+�a�5gX&quot;��QH�@qK��pJ�����K3����OG����\B_Cx��&gt;��}��</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 88</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 bfc4b28c8a61c77cb494b0a1b7316510a56894</span><pre class='file-content' style='display:none; margin-top:5px;'>x+)JMU041g040031Q�K�,�L��/JeX��)�DZ��pQa�/�e3z�3M�@!�����p�yK����K���l�[}�s.Ԍ���&lt;��J��c��ץ�z�����S�B��J�RK3�RsS�J��J*J,�-XR�[�w�&lt;S=Q�V�&lt; ��;)</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 8d</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 26581ae39f8473743f995026a52642610d3796</span><pre class='file-content' style='display:none; margin-top:5px;'>x+)JMU06g040031Q��OI�)�+�d�s+�d�{+�Y��.�� &lt;�&#039;</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 57c75c8db027c6078196cf68046f378e399dfd</span><pre class='file-content' style='display:none; margin-top:5px;'>xK��OR04fPV(HL�/IUH,(� D�N</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 761212486b7f8b9cf7bd1610840aa6a6e5491f</span><pre class='file-content' style='display:none; margin-top:5px;'>xK��OR01`H+��U�S��-�/*QH�-(J-N,�QH,-��QHI,�H�O,J� ��]</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 96</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 fc545d9fb7e2b6d0e581972411c9ecc6c92868</span><pre class='file-content' style='display:none; margin-top:5px;'>x�TQ��0���&quot;䩅��&lt;\((��(�޽���t7�&amp;�I�.���i���]_�f���曯m�k����W�zt�r�L���|��qS ���&#039;�f�5{#X��,��Gg=������M:�K(�Ѕ|�or�a42h��ٟ��._�.�z�{#M��� �H�ހ��٥�G�d���;[՞�S`�Xn�niyBMA�C7������v��t���F�9�UR�^�j8�Y�;��q9�=�ViN�a��&gt;�!VG(����E�$%_�Ӗ�gɷ�!:͹�U��gH\wP��u�e�.]aBˎ�DV&lt;�䱈؇�P��
+�5�FW&lt;���?&lt;�@{��-SӘx�R�S�6k��8��J!D��&lt;ؽ�OL�k�,@�ɛ��Hs��P���x(��+�kC.��&quot;�`M���F��uϬ��,&gt;��5��HW��1��c`;gJ%9)=7K$.�XF��̍�K��韞��\�i�d�#�d�ˏ���4=_)���VIB��#ي~&lt;a�ێ&gt;��uU�9�</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 97</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 703702f483517740f563faf17581ef827dbde9</span><pre class='file-content' style='display:none; margin-top:5px;'>x�U�n�0eݯ��Tu��-EHUf$���b��w&amp;��Ӈ�JlX&quot;?P�`���`ǟ��&#039;p�$�AU%*Mg�w||��&#039;�2%�&gt;�߹w�	x�Q[%w�]�Fm���UJe�7PM?�a��*ŝ���̥F���|����jSf��	:�h/Z6������݇���?�I�+i�/V�6�E��|���M�pqQ��|#�/�m�A_1cϏ^�d�+O03�/z@��D
+�ȵ96ldVq+�%v��d�@�l@�$
+i���L�KT@$f,P[�ZY,����Y�D}E��Aᯐ��&lt;��g,t��$A=�����f[���WX%�x��S���H�c��3����E\���ؾ;J��,�^�����(��@�&amp;�9����.��7zh���FRc�^���ʆ�38�vwv����s��p_��PѾy�ۛ-���Y�:�W�㙽U��_o�;����[r�����k�ْ��%Ѵa�tjDUԇliM׮l@{�f��N��	+�M�u�Lzl@d���s^.βaг�	���R�_��$��\���Aj�^�i����y(�b��p����s���M��G��1!P��6�GJ=fHr�i�],H��(�^�&lt;&lt;�g깉z1�/]QrjRHj-��OV�;�2*�I�/=�p�y�O����xJ�]���Y45�H��I�OO �?���2��_���g-��F�!yOа�����|�WF�U 7І��*r�T���%�S���u�06</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 98</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 5fcf331dddcc8ef17a7f920e537fdf5a3a67cb</span><pre class='file-content' style='display:none; margin-top:5px;'>x}V�n�6�YO1�/V7�ǭ)�l��b��k�?�h����H��������z���:�~��VKg���f�M,70�ξ�|��3��p�g�ҽ�Iq�t��]���Ɛ�m��H�u]gAO5�)��_ҬB�n��_o��#�d�#�p引IJ��?�,F�	��2�;��a�?:7&lt;� %I*!cbG��h ��f�D�P�O�u�l���bR��xLi���&amp;&quot;.�	�2M��&amp;&#039;�$�\dL�/O��Bi��5QJ*��V�-��*J�s�	5���9\����n)�].L��F^�~�.�fKJ�&amp;�ڸ�2b�i�9%�e��8m%r��~�O��p���,�16ש��8�?|�|.g�~�/e.��G�P�l�8!��-o���i��#5�s:��)�lC��b���(n�+&amp;B�|�j�NY��%�M�6�OU���_�9�+Z�rT��ֵ�oҽ}������q���&gt;�T
+L8�J����zN���*���M��L���W�֔]���Zf�u0nR�X�^HM��r��W��lO�$s��W7��b�$U,#�{.�9��{�ʥ �K�F����qB�-laOh�]��0o� &gt;Z���؎i��U1;Ei�&#039;S�U�{eٰ��]�&#039;�E����E����e��7��Ӂ����b�ԛ\�JCE�#�0 &lt;��.��	���\��jF� ��.��g���y&gt;�c��vف�bf$U����^���jBV�J�umh+(��c���H���j&lt;e^]����)�d�䥙Vv�����o��sԵ�+KD�ƥ5�*��^��*�l5�`�&quot;J!�L0x��V���õ�8v�*.46���w�5|�[ OP5�V��
+&lt;541]�\ й�Z�73�+t۾��3U�_��1�뭂z�4*�V���sK�Z�d�����K&quot;���^q�
+�wR�U�:��k�5x�jn��3�-���Zd����N�&quot;�k�tk�[����X�wx�^�9�ZU���Li�K`�U�^�� p릃�!x1)�v�6c�s�7gԨ</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 9b</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 5d3d17ba118e364e7052e5fca34cbe3142516e</span><pre class='file-content' style='display:none; margin-top:5px;'>x�OIn� ̙W�a��Q4�S��@{Ld3R�!�-���J�%�m+�ޘ!cF�R!�����*&#039;��R7�&amp;z�f#j�w0�b�|L���VMA�Ǚ�Cv�� �ї�ೞ����׃�V�6�C�ø�7*�[��&amp;t��q�W��C�;�s��(�X��&amp;8y_PA|v&gt;a&#039;���Z2e��S{]� p�om</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 9c</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 16289f78160622f5cb00f00254d44efdc74420</span><pre class='file-content' style='display:none; margin-top:5px;'>x}�MN�@���)Jfc��,�&quot;��f� ��P�.3-��S����@��Ku��C/�Ӯz��{�v5|���K��@��kU/g=P�w�w}��gEqW�)K� ��c���`�~S��{=k�|�!C~}[�M,���35�]�8W�EK]Һ�n���e&gt;�� �ʲL�kb&#039;q8�����]�e*����u`��&#039;%��Ϡ�� ����A�|��`P9&amp;/|dmU@bvY�`Eu��h;��^�&#039;�A=��⪼��2z&#039;��G�-�Q�
+�-�N�Z�J�{ H����	M����()j�~�,ᱣ�#�&#039;o��󳻤��p��2��f��T�Ī�MzU�Q��3��HIP;?���M�QML����b3�_h��� �:�TH��i&#039;C�o|��cf������T�����f,&quot;ř�Yfds��	޿\k2�</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 9f</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 34423331070e29bda7252b8c42e9096cf360b6</span><pre class='file-content' style='display:none; margin-top:5px;'>x��K�  ]�\���Ab�Wy�~��J���� ����;�3�d��T�r�T2�h=��o�k�+IV+�AB�:���3�E�J��e&#039;�IK xm�Z6Z�}0neLY���#�yzn��4d�H���!��������8K-eu�c��G7g�?�;	W��W�F�c�</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 a9</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 67dec60c6d2a12e3c16fae2b35e06cf00e9f78</span><pre class='file-content' style='display:none; margin-top:5px;'>x+)JMU024b040031Q�����,���+�d�?ӻA�{��,��}�s�B��$�$&amp;%���yl����ךT�ha��B�9δ[� �Bn~JjN1C�Z���-�%�3Ԗ�9%�O�((�/-I-f���P�Ņ�ߜ&gt;��y��S�R����܂�D���3�4t�d�z�&#039;jfz�ɉ5�%�@K���r}�=I�,c�恶=� 4�V�</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 ac</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 2f95a5c16dad7e8c04c38d0344bcb094f59a31</span><pre class='file-content' style='display:none; margin-top:5px;'>x�U�n�0�O1����Y��Sv�J��@����&amp;���vU*q�3B�9p��}�&gt;����n�&quot;�����73�|���a&gt;{u��j䥓���bn�4u�b�w=��Q�t�\�ĭw�l��m�������FZ&gt;-t.�|��3p��C8��l���.m�r�d�	@�Λ�&lt;��??��.��M��0�/&#039;��\�x�2],Xh	w�m؃�	z��ҥZ,X��cMx�/`̡��N�� �
+rz�0+ʵkn���3�Y�\.U�A�x&quot;S��4vJ�&lt;B�,#?�3##������بݻmIH�y,�d�`����י����&gt;?�7HU�V!mb��#�AQN�����/�L��\�e~�s��d��I�vNMSbW ���d97[�&lt;�wo���U=
+������F�M����h#� �{�*P�*u���ܚ�e��n�A��|4B3&quot; �b-�P�O�p&lt;�Y��Z�� �f�P�R������t�0.����:�D����|s�.��O�}ң�n�v�8Q����&lt;F��X�!\�@�)&amp;ڡ��[��a�BVTÉ�A�Ue\e��Xm�%
+��zi�� ��Z-�`{�9�D��n�N���\=x�N�Yz�lg�z�x�R#�ULy�((��:�V1�񲹟2�v
+�=�XQkF� ^W�F�Qȇ��q=�&lt;�:����m��Hl�l��E8j1��&lt;���!)��짲H�y+�Ѝ��)�
+A��K}�ᒆ�ʶU��s��v�*��Ɓ�������G�/�[���}��r� �pFϭ�%����ig�</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 ad</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 ef4266341b258b31a2716bfa2ca6988c470169</span><pre class='file-content' style='display:none; margin-top:5px;'>x%�1� F;߯8��A�ر��
+]%ƃQSOm������}��4�����cOK�p�&gt;�R�Ӽ�R�×�)O+�/6��&#039;�R/	��)#E��(1��1��f݇W��M!�(&lt;C5cM���ٚx��lK�B���M ��z��Kv������?B</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 ae</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 b281bbb25c1cf0cdb8b70ab23490712f5643ac</span><pre class='file-content' style='display:none; margin-top:5px;'>x5�1� @Q���8�Y�CA%*n��������}��*
+A�dsI(\A����+�K���ֻ8&gt;��������`�L�0��^Ź$I</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 b0</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 ce39fb33ae5998fb55bdff5a823da2bf44d9be</span><pre class='file-content' style='display:none; margin-top:5px;'>xu��n�@�9�)����iԐH�*Up�C	�B������w���*Qő� �;w��o���c����{���wf
+C,�Ϟ�ڑ��U&quot; �N%��­F^c����E�m�-&amp;�S8&#039;�����z�x�5�C�҃����j:�DqufH
+sM!N1D�Z�\jT�,q�s9�&lt;r�c��\5㌪��I�&quot;o����͒.���7[j�M�.�op�{)��R�)WM�|�g3���\�H���&amp;&quot;#���P%�h�LR=�`y|��(�p�n�;�?Z����&#039;����c*�F1�cH�v,]첱R�^����:_ki����$]&gt;ж��*~��6���j�}�ʲ�ն�*y*N�u���Q1ap�qc�{|C@�%�Ǚ�A�9�t�a�ztFH��in�n�J��]�Aݯo�aP�5H	&gt;y��!�Q��N���ԯb&#039;/ �@�C(o��.�Mx��M���z� </pre></li><li><span class='file' onclick='toggleFile(this)'>📄 e4c27ad1a16d91eccbca82845859cacee50275</span><pre class='file-content' style='display:none; margin-top:5px;'>x+)JMU027a040031Q�����,���+�d�-�Ȯ��}��@ײeO=��KK2@J��	����ѶO���|s�FTIrNfj^Ij1HY����L󗬍䜖��$�S��,%�8#)?�(�α�r�\I�#�ۛ�uEY�hXeU��[P�Z�6�BJ�iӯ�;e��M^=��,�4/93?/�(3��c�ge&#039;����G�ѼpTiqjQYf2DY�d���6^W5�}�ċ�[{C �`p�</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 b1</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 df1e5c9bbd2ecdd55ca6bcc6f3bc785bc2d6f5</span><pre class='file-content' style='display:none; margin-top:5px;'>x]�AO� �=�+&#039;H6��I��AOf㽡2]1��f��]���ʥ��7���A�?��݌�Nx!
+�����?����!�o�~b�_�����&lt;�䴈����2��#��ȅs|�t(��~�
+L�o&#039;�!��&gt;˥�b�r��B����2T0 ��? *���h��#�ws���cv�ɜ��g�	�S��iz%�I&amp;a�Z��|_%��X�%�e��ʤ��Е�h�g�E8�j�`�S��HK��J���H�n)Z�?�}Jwm���k%���ʇX&lt;ă7�	�϶��	@Ie�_qҤ������D@Z\�f�յ4��jZ�ӰTyvf�_��%</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 b8</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 483d1f663a0e80ae88141d12610cce4f19c375</span><pre class='file-content' style='display:none; margin-top:5px;'>xu��N�0�9�)�pi��BB�T.;�\���Y#�qHR�xz�l�V!r�����-&lt;=?�i�#8a0�c�;��{vq�	q)��8y
+������{��C�W��i�м˶˦�c���S��T#q�,k!�bw�D&#039;������kxx�q&#039; )�+�L 
+!����V1\;IY&gt;{���pøͪ�������\Ħ�ZWZ�&lt;,lo��t�
+f4c5�jZ�&amp;O)�i�e L/?dQq��?�`�V\�j�&quot;�</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 c9</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 1f4c353eb090ff412000b092b6cdd1da2b43d0</span><pre class='file-content' style='display:none; margin-top:5px;'>x�T�j1��_1����&amp;n.��!�z)��޵+�+*i���$��^�s)���C��_�?��:�l�vLt�����ӛ��hl��x����ȫ ���e�����j4�!��%��K7S�;�p��&#039;�܀4��������Xˊ��F�-��j����
+���\��(;���6(�#V�ضE_�uT��Ug��С�}`�j�9��I1��l&lt; ���-�-��UJPJ�~��ؼ���9bq�z�[١ҍ�۸g���)��4UN�ԭ�v�ݖ�m�p��#��i�c��G�&lt;&lt;�Bt�$�w/�&amp;����S-&#039;@D����n���f�uf�	� ��Sb9�f���`�~E��O�J�]]�k�U�X�M��t!����N�R@~�p&amp;4��SA���:t���&quot;�V�.,�{ǫ��i]��Z$�b;�6���{۩���azJ�c�@&amp;B��:�&#039;��A٬J�L�\ƺ[��I�L�Z�P^��,��#�����aߗI���k}��̎ʈF��O]^���O��їZ�&amp;I�A++���2&gt;�_�_i�c¼`%�\���%2��5ŵB)���N&lt;:�c&quot;�ZA
+�is��;|@��p�	�NȶN�����</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 ce</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 0ead6576637b9560bfd0a0c46f377c6ad17d3a</span><pre class='file-content' style='display:none; margin-top:5px;'>x+)JMU0�0d040031QHJ,N��(��a�d�qeK}�Ye�nN��3IPE�9��y%����w|�]ݼj{�^Y�\�q%��
+S�3���R *�?�p�*ش۳�͙�K��g��.AU���%g��%e�C����F�����=�_%_(�&lt;U���u$��_������.X�Z��G�(&#039;?=3bo�kxk[�k���`�۞��n	UU�ZT���󤼏�݆	�6L�v��-m� ,pI</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 d7</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 d7787d8229991ad355526088d0046ff4b80cf4</span><pre class='file-content' style='display:none; margin-top:5px;'>x+)JMU020`040031Q�K�,�L��/JeX��)�DZ��pQa�/�e3z�3M�@!���������f0r��0�?��cK�f�&amp;f��T2�&#039;[�.m�k�=�x�o�R��UR�ZX�Y����WR�WRQR:��:��3s/m��ve���P�ŕy��Ņ9�%����%�E�� 6���m�.r��н���l�w�� ��X</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 d8</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 0457dc7dbfabd7a39e54bb3e3bc3cba682134e</span><pre class='file-content' style='display:none; margin-top:5px;'>x��K�! ]s
+.�Mb�\�=x�=�������ܹ�J*[)۔�ifih����`ℐ])���p!M�ZD�uʐ��`���+�@	=\��h��
+.f�9��yoC��߹���&gt;�:�`:����]n����Mj�Y��˳2J��󓿜���=����c��;��5���d�</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 52375308d4b47f8e09cd2324458b090a8fcc62</span><pre class='file-content' style='display:none; margin-top:5px;'>xeR�n�@圯�r�vSh;J{��ʁS5�]�Kֻ��$$��A|?��V���̛yz��T�U��ū�����n���l��A۔QO��h�)��@�)B-�����=�Ɨ�3@���&gt;-�2N�`,ay�	�i�pm�^2���F��&quot;���}��Z��2j������6��2���(�}�V�Q ��ǋ$K֩ԁR�_ �M��W����
+�R4	�A2@��	��B�k��[g���M}Y_ո��Y�k�9���k4o!�qP^�8�&lt;��1�Vyf���Ԓ��V����o���W�{r�QJm�V�g&amp;�v������eI�g��rD��!w��fY6+�Ȳ6�#�c{z�,^[vXţ�3�&gt;�G@����A���C����-�t��b0r�� �PF�&#039;�� 3� �^��p�&gt;7s d��$� I	ݽ</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 d9</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 cc1cb083f6ef71680109c48eb093ff0dcdc6a4</span><pre class='file-content' style='display:none; margin-top:5px;'>x+)JMU024b040031Q�����,���+�d�?ӻA�{��,��}�s�B��$�$&amp;%���yl����ךT�ha��B�9δ[� �Bn~JjN1C�Z���-�%�3Ԗ�9%�O�((�/-I-f(y������a���5+ظA����$�Ԝ�[�Z�\=5a��G��k�.�ZAԔ�d-�wt&gt;�a�$�粌=̚��� T�T</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 e0</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 e8902a56d76766291a710abe352284b1a8c71a</span><pre class='file-content' style='display:none; margin-top:5px;'>x+)JMU041g040031Q�K�,�L��/JeX��)�DZ��pQa�/�e3z�3M�@!�����p�yK����K���l�[}�s.Ԍ���&lt;��J��c��ץ�z�����S�B��J�RK3�RsS�J��J*J�mjܽ)F���۹6�L(�s^ �r=�</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 e5</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 de1972076137fc13fd90d2e143054e5e183e77</span><pre class='file-content' style='display:none; margin-top:5px;'>x��;�0�}�� h�!$D�{�8�Yp��c���v��f�*(��Z�@Gez�1��H�4��i���ѝt4�h��{������,�ӫ�T|�����:e��S�|鬲�#v���S�Ϸ�QR�T���u��p�*�&lt;�Vޣ� ��[�</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 ed</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 418dd47069e676c80eef2f0d335bac29d0df90</span><pre class='file-content' style='display:none; margin-top:5px;'>x}SMo� �_�|�&amp;ݛ%�VJ&quot;��jջ��R�� �����lpLv��`c�7̛�^���ﾌ�&lt;����2�������(}�O�y�!6�ANҊ��&#039;�*�h�f�&lt;*{�~*�����ex�2L�6�I
+��Oy!��4Q��!6��l�,��5��L���#�y��,c&#039;z���f{s�FY9Ha�J3I����
+�ޠU�з�F��T�q/��S��B�X+p�w%���k��׵XYp\�,�NRu�&quot;OI�EO!#!�15�� ��Bvb�kʵ�&lt;[R=�&amp;J%ޕ�ʇ�	������&quot;�%�%J�R3������(��U�����R ��*7�&lt;Jk�EZ�ş�u��˙-�21��I��Oɭ����=غ\B)�������`�6tt��B��9�lŖW�Wj�����U&amp;���3Å ���(���QW�^�P2{��O��t���9t\av�;��?.���</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 f0</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 d9e9fe52a87dd688c1335d672fb24f69f6b43a</span><pre class='file-content' style='display:none; margin-top:5px;'>x+)JMU0�d040031Q(NM.-�,��+�d��a+�f�װ�CDV(�眿��R T��</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 ff</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 265849ec2df0f422a8bf874923ea63d07589ca</span><pre class='file-content' style='display:none; margin-top:5px;'>x�T͊�0�9O1��5���cX�-�Rz�]�&amp;��-����{���ޗ��}��I�`aG�m��B5��h���o~\�����7��6g�7�p�*��\��ep��L�U���^�i�R���/�����=l6��¢���t�m��E�w�6�`|�\�i����y����p��Ӹ��u�Y�tp2)��v�kO�3��H�G� �\��aС�F���8Ϡn�s3f��l
+]�]�rP���i�Nd���\J/�~pY`�F�g,�e�hy�Ҵ�})z�1O,~]*�&quot;&quot;����5��&lt;�~���l
+&quot;k���j�у��k�_�u�α�J�Pyn�&lt;�&lt;S�!=�N�W�&#039;}��ߙ�V-P@��Y�����Ry&#039;�0��u�&amp;^&quot;&#039;A�V5�L���)�,?�+r�ː�ш����n�]��eZ�0a��_q�bS�&amp;���C1c���M�G$DIM8?��G�b�t����G_,%��sg/�Dr���{��[j�0=����jv����-+�Ӎ&quot;�cBG�D�W��9d#j&#039;GJ-B�C�G��;Ynŋ�|�i����&lt;|��M�n�W�H�٧�	(
+��</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 info</span><ul style='list-style:none;padding-left:60px;'></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 pack</span><ul style='list-style:none;padding-left:60px;'></ul></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 refs</span><ul style='list-style:none;padding-left:40px;'><li><span class='folder' onclick='toggleFolder(this)'>📁 heads</span><ul style='list-style:none;padding-left:60px;'><li><span class='file' onclick='toggleFile(this)'>📄 master</span><pre class='file-content' style='display:none; margin-top:5px;'>319cfe6db3898e1aebd19527788416667856dfe0
+</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 remotes</span><ul style='list-style:none;padding-left:60px;'><li><span class='folder' onclick='toggleFolder(this)'>📁 origin</span><ul style='list-style:none;padding-left:80px;'><li><span class='file' onclick='toggleFile(this)'>📄 master</span><pre class='file-content' style='display:none; margin-top:5px;'>319cfe6db3898e1aebd19527788416667856dfe0
+</pre></li></ul></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 tags</span><ul style='list-style:none;padding-left:60px;'></ul></li></ul></li></ul></li><li><span class='file' onclick='toggleFile(this)'>📄 .gitignore</span><pre class='file-content' style='display:none; margin-top:5px;'># Python
+*.pyc
+__pycache__/
+
+# Virtual environments
+venv/
+.env
+
+# Termux / outros caches
+*.pyo
+*.pyd
+
+# IDEs / editores
+.vscode/
+.idea/
+*.swp
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+.env
+</pre></li><li><span class='folder' onclick='toggleFolder(this)'>📁 app</span><ul style='list-style:none;padding-left:20px;'><li><span class='file' onclick='toggleFile(this)'>📄 __init__.py</span><pre class='file-content' style='display:none; margin-top:5px;'># pacote app
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 database.py</span><pre class='file-content' style='display:none; margin-top:5px;'>import os
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, declarative_base
+
+DB_ENGINE = os.getenv(&quot;DB_ENGINE&quot;, &quot;mysql&quot;)
+DB_USER = os.getenv(&quot;DB_USER&quot;, &quot;root&quot;)
+DB_PASSWORD = os.getenv(&quot;DB_PASSWORD&quot;, &quot;&quot;)
+DB_HOST = os.getenv(&quot;DB_HOST&quot;, &quot;localhost&quot;)
+DB_PORT = os.getenv(&quot;DB_PORT&quot;, &quot;3306&quot; if DB_ENGINE == &quot;mysql&quot; else &quot;5432&quot;)
+DB_NAME = os.getenv(&quot;DB_NAME&quot;, &quot;estetica_cloud&quot;)
+
+if DB_ENGINE == &quot;postgresql&quot;:
+    DATABASE_URL = f&quot;postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}&quot;
+else:
+    DATABASE_URL = f&quot;mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}&quot;
+
+if not DATABASE_URL:
+    raise ValueError(&quot;❌ Nenhuma URL de banco de dados configurada no .env!&quot;)
+
+engine = create_engine(DATABASE_URL)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Base = declarative_base()
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+</pre></li><li><span class='folder' onclick='toggleFolder(this)'>📁 models</span><ul style='list-style:none;padding-left:40px;'><li><span class='file' onclick='toggleFile(this)'>📄 models.py</span><pre class='file-content' style='display:none; margin-top:5px;'>from sqlalchemy import Column, Integer, String, Float, ForeignKey, Date, Time
+from sqlalchemy.orm import relationship
+from app.database import Base
+
+class Empresa(Base):
+    __tablename__ = &quot;empresas&quot;
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String(100), nullable=False)
+    email = Column(String(100), unique=True, nullable=False)
+    senha = Column(String(255), nullable=False)  # hashed
+
+    funcionarios = relationship(&quot;Funcionario&quot;, back_populates=&quot;empresa&quot;, cascade=&quot;all, delete-orphan&quot;)
+    clientes = relationship(&quot;Cliente&quot;, back_populates=&quot;empresa&quot;, cascade=&quot;all, delete-orphan&quot;)
+    servicos = relationship(&quot;Servico&quot;, back_populates=&quot;empresa&quot;, cascade=&quot;all, delete-orphan&quot;)
+
+class Funcionario(Base):
+    __tablename__ = &quot;funcionarios&quot;
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String(100))
+    cargo = Column(String(50))
+    empresa_id = Column(Integer, ForeignKey(&quot;empresas.id&quot;))
+    empresa = relationship(&quot;Empresa&quot;, back_populates=&quot;funcionarios&quot;)
+
+class Cliente(Base):
+    __tablename__ = &quot;clientes&quot;
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String(100))
+    telefone = Column(String(20))
+    empresa_id = Column(Integer, ForeignKey(&quot;empresas.id&quot;))
+    empresa = relationship(&quot;Empresa&quot;, back_populates=&quot;clientes&quot;)
+
+class Servico(Base):
+    __tablename__ = &quot;servicos&quot;
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String(100))
+    preco = Column(Float)
+    descricao = Column(String(255))
+    empresa_id = Column(Integer, ForeignKey(&quot;empresas.id&quot;))
+    empresa = relationship(&quot;Empresa&quot;, back_populates=&quot;servicos&quot;)
+
+class Reserva(Base):
+    __tablename__ = &quot;reservas&quot;
+    id = Column(Integer, primary_key=True, index=True)
+    cliente_id = Column(Integer, ForeignKey(&quot;clientes.id&quot;))
+    servico_id = Column(Integer, ForeignKey(&quot;servicos.id&quot;))
+    funcionario_id = Column(Integer, ForeignKey(&quot;funcionarios.id&quot;))
+    data = Column(Date)
+    hora = Column(Time)
+</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 routes</span><ul style='list-style:none;padding-left:40px;'><li><span class='file' onclick='toggleFile(this)'>📄 __init__.py</span><pre class='file-content' style='display:none; margin-top:5px;'>from . import empresas, auth, dashboard
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 auth.py</span><pre class='file-content' style='display:none; margin-top:5px;'>from fastapi import APIRouter, Request, Form, Depends
+from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.templating import Jinja2Templates
+from sqlalchemy.orm import Session
+from app.database import get_db
+from app.models.models import Empresa
+from app.utils.security import verify_password
+
+router = APIRouter(prefix=&quot;&quot;, tags=[&quot;auth&quot;])
+templates = Jinja2Templates(directory=&quot;app/templates&quot;)
+
+@router.get(&quot;/login&quot;, response_class=HTMLResponse)
+def login_page(request: Request):
+    return templates.TemplateResponse(&quot;login.html&quot;, {&quot;request&quot;: request})
+
+@router.post(&quot;/login&quot;)
+def login_empresa(
+    request: Request,
+    email: str = Form(...),
+    senha: str = Form(...),
+    db: Session = Depends(get_db)
+):
+    empresa = db.query(Empresa).filter(Empresa.email == email).first()
+    if not empresa:
+        return templates.TemplateResponse(&quot;login.html&quot;, {&quot;request&quot;: request, &quot;erro&quot;: &quot;Empresa não encontrada&quot;})
+    if not verify_password(senha, empresa.senha):
+        return templates.TemplateResponse(&quot;login.html&quot;, {&quot;request&quot;: request, &quot;erro&quot;: &quot;Senha incorreta&quot;})
+    return RedirectResponse(url=f&quot;/dashboard/{empresa.id}&quot;, status_code=303)
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 clientes.py</span><pre class='file-content' style='display:none; margin-top:5px;'>from fastapi import APIRouter, Request, Depends, Form
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import RedirectResponse
+from app.models.models import Cliente, Empresa
+from app.database import get_db
+
+router = APIRouter()
+templates = Jinja2Templates(directory=&quot;app/templates&quot;)
+
+@router.get(&quot;/clientes/{empresa_id}&quot;)
+def listar_clientes(request: Request, empresa_id: int, db=Depends(get_db)):
+    clientes = db.query(Cliente).filter_by(empresa_id=empresa_id).all()
+    empresa = db.query(Empresa).filter_by(id=empresa_id).first()
+    return templates.TemplateResponse(&quot;clientes.html&quot;, {
+        &quot;request&quot;: request,
+        &quot;clientes&quot;: clientes,
+        &quot;empresa&quot;: empresa,
+    })
+
+@router.post(&quot;/clientes/{empresa_id}/novo&quot;)
+def novo_cliente(
+    request: Request,
+    empresa_id: int,
+    nome: str = Form(...),
+    telefone: str = Form(...),
+    db=Depends(get_db)
+):
+    cliente = Cliente(nome=nome, telefone=telefone, empresa_id=empresa_id)
+    db.add(cliente)
+    db.commit()
+    return RedirectResponse(url=f&quot;/clientes/{empresa_id}&quot;, status_code=303)
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 dashboard.py</span><pre class='file-content' style='display:none; margin-top:5px;'>from fastapi import APIRouter, Request, Depends
+from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.templating import Jinja2Templates
+from sqlalchemy.orm import Session
+from app.database import get_db
+from app.models.models import Empresa, Cliente, Funcionario, Servico
+
+router = APIRouter(prefix=&quot;&quot;, tags=[&quot;dashboard&quot;])
+templates = Jinja2Templates(directory=&quot;app/templates&quot;)
+
+@router.get(&quot;/dashboard/{empresa_id}&quot;, response_class=HTMLResponse)
+def dashboard(request: Request, empresa_id: int, db: Session = Depends(get_db)):
+    empresa = db.query(Empresa).filter(Empresa.id == empresa_id).first()
+    if not empresa:
+        return RedirectResponse(url=&quot;/login&quot;, status_code=303)
+
+    total_clientes = db.query(Cliente).filter_by(empresa_id=empresa_id).count()
+    total_funcionarios = db.query(Funcionario).filter_by(empresa_id=empresa_id).count()
+    total_servicos = db.query(Servico).filter_by(empresa_id=empresa_id).count()
+
+    return templates.TemplateResponse(&quot;dashboard.html&quot;, {
+        &quot;request&quot;: request,
+        &quot;empresa&quot;: empresa,
+        &quot;clientes&quot;: total_clientes,
+        &quot;funcionarios&quot;: total_funcionarios,
+        &quot;servicos&quot;: total_servicos,
+    })
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 empresas.py</span><pre class='file-content' style='display:none; margin-top:5px;'>from fastapi import APIRouter, Request, Form, Depends, HTTPException
+from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.templating import Jinja2Templates
+from sqlalchemy.orm import Session
+from app.database import get_db
+from app.models.models import Empresa
+from app.utils.security import hash_password
+
+router = APIRouter(prefix=&quot;&quot;, tags=[&quot;empresas&quot;])
+templates = Jinja2Templates(directory=&quot;app/templates&quot;)
+
+@router.get(&quot;/&quot;, response_class=HTMLResponse)
+def home(request: Request):
+    &quot;&quot;&quot;Página inicial: cadastro de novas empresas&quot;&quot;&quot;
+    return templates.TemplateResponse(&quot;home.html&quot;, {&quot;request&quot;: request})
+
+@router.post(&quot;/empresas&quot;)
+def criar_empresa(
+    nome: str = Form(...),
+    email: str = Form(...),
+    senha: str = Form(...),
+    db: Session = Depends(get_db)
+):
+    &quot;&quot;&quot;Cria nova empresa armazenando senha hashed&quot;&quot;&quot;
+    existing = db.query(Empresa).filter(Empresa.email == email).first()
+    if existing:
+        raise HTTPException(status_code=400, detail=&quot;E-mail já cadastrado&quot;)
+    empresa = Empresa(nome=nome, email=email, senha=hash_password(senha))
+    db.add(empresa)
+    db.commit()
+    db.refresh(empresa)
+    # após criar, redireciona para login
+    return RedirectResponse(url=&quot;/login&quot;, status_code=303)
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 funcionarios.py</span><pre class='file-content' style='display:none; margin-top:5px;'>from fastapi import APIRouter, Request, Depends, Form
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import RedirectResponse
+from app.models.models import Funcionario, Empresa
+from app.database import get_db
+
+router = APIRouter()
+templates = Jinja2Templates(directory=&quot;app/templates&quot;)
+
+@router.get(&quot;/funcionarios/{empresa_id}&quot;)
+def listar_funcionarios(request: Request, empresa_id: int, db=Depends(get_db)):
+    funcionarios = db.query(Funcionario).filter_by(empresa_id=empresa_id).all()
+    empresa = db.query(Empresa).filter_by(id=empresa_id).first()
+    return templates.TemplateResponse(&quot;funcionarios.html&quot;, {
+        &quot;request&quot;: request,
+        &quot;funcionarios&quot;: funcionarios,
+        &quot;empresa&quot;: empresa,
+    })
+
+@router.post(&quot;/funcionarios/{empresa_id}/novo&quot;)
+def novo_funcionario(
+    request: Request,
+    empresa_id: int,
+    nome: str = Form(...),
+    cargo: str = Form(...),
+    db=Depends(get_db)
+):
+    funcionario = Funcionario(nome=nome, cargo=cargo, empresa_id=empresa_id)
+    db.add(funcionario)
+    db.commit()
+    return RedirectResponse(url=f&quot;/funcionarios/{empresa_id}&quot;, status_code=303)
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 servicos.py</span><pre class='file-content' style='display:none; margin-top:5px;'>from fastapi import APIRouter, Request, Form
+from fastapi.responses import RedirectResponse
+from sqlalchemy.orm import Session
+from app.database import SessionLocal
+from app.models.models import Empresa, Servico
+from fastapi.templating import Jinja2Templates
+
+router = APIRouter()
+templates = Jinja2Templates(directory=&quot;app/templates&quot;)
+
+@router.get(&quot;/servicos/{empresa_id}&quot;)
+def listar_servicos(request: Request, empresa_id: int):
+    db: Session = SessionLocal()
+    empresa = db.query(Empresa).filter(Empresa.id == empresa_id).first()
+    servicos = db.query(Servico).filter(Servico.empresa_id == empresa_id).all()
+    db.close()
+    return templates.TemplateResponse(
+        &quot;servicos.html&quot;,
+        {&quot;request&quot;: request, &quot;empresa&quot;: empresa, &quot;servicos&quot;: servicos}
+    )
+
+@router.post(&quot;/servicos/{empresa_id}/novo&quot;)
+def novo_servico(request: Request, empresa_id: int, nome: str = Form(...), preco: float = Form(...), descricao: str = Form(&quot;&quot;)):
+    db: Session = SessionLocal()
+    servico = Servico(nome=nome, preco=preco, descricao=descricao, empresa_id=empresa_id)
+    db.add(servico)
+    db.commit()
+    db.close()
+    return RedirectResponse(f&quot;/servicos/{empresa_id}&quot;, status_code=303)
+
+@router.get(&quot;/servicos/{empresa_id}/excluir/{servico_id}&quot;)
+def excluir_servico(request: Request, empresa_id: int, servico_id: int):
+    db: Session = SessionLocal()
+    servico = db.query(Servico).filter(Servico.id == servico_id, Servico.empresa_id == empresa_id).first()
+    if servico:
+        db.delete(servico)
+        db.commit()
+    db.close()
+    return RedirectResponse(f&quot;/servicos/{empresa_id}&quot;, status_code=303)
+</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 templates</span><ul style='list-style:none;padding-left:40px;'><li><span class='file' onclick='toggleFile(this)'>📄 base.html</span><pre class='file-content' style='display:none; margin-top:5px;'>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;pt-BR&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;{% block title %}Estética Cloud{% endblock %}&lt;/title&gt;
+  &lt;link href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;
+  &lt;style&gt;
+    body { background-color: #f8f9fa; font-family: Arial, sans-serif; }
+    .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+    h2 { text-align: center; margin-bottom: 30px; color: #333; }
+    .btn-secondary { display: inline-block; margin-top: 20px; }
+  &lt;/style&gt;
+  {% block extra_head %}{% endblock %}
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    {% block content %}{% endblock %}
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 clientes.html</span><pre class='file-content' style='display:none; margin-top:5px;'>{% extends &quot;base.html&quot; %}
+
+{% block title %}Clientes — {{ empresa.nome }}{% endblock %}
+
+{% block content %}
+&lt;h2&gt;👩‍🦰 Clientes da Empresa&lt;/h2&gt;
+
+&lt;form action=&quot;/clientes/{{ empresa.id }}/novo&quot; method=&quot;post&quot; class=&quot;row g-2 mb-4&quot;&gt;
+  &lt;div class=&quot;col-md-5&quot;&gt;
+    &lt;input class=&quot;form-control&quot; name=&quot;nome&quot; placeholder=&quot;Nome do cliente&quot; required&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;col-md-5&quot;&gt;
+    &lt;input class=&quot;form-control&quot; name=&quot;telefone&quot; placeholder=&quot;Telefone&quot; required&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;col-md-2 d-grid&quot;&gt;
+    &lt;button class=&quot;btn btn-primary&quot;&gt;Adicionar&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+
+&lt;table class=&quot;table table-striped table-hover bg-white shadow-sm&quot;&gt;
+  &lt;thead class=&quot;table-light&quot;&gt;
+    &lt;tr&gt;
+      &lt;th&gt;ID&lt;/th&gt;&lt;th&gt;Nome&lt;/th&gt;&lt;th&gt;Telefone&lt;/th&gt;&lt;th&gt;Ações&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    {% for c in clientes %}
+    &lt;tr&gt;
+      &lt;td&gt;{{ c.id }}&lt;/td&gt;
+      &lt;td&gt;{{ c.nome }}&lt;/td&gt;
+      &lt;td&gt;{{ c.telefone }}&lt;/td&gt;
+      &lt;td&gt;
+        &lt;a href=&quot;/clientes/{{ empresa.id }}/excluir/{{ c.id }}&quot; class=&quot;btn btn-sm btn-danger&quot;&gt;Excluir&lt;/a&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    {% endfor %}
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;a href=&quot;/dashboard/{{ empresa.id }}&quot; class=&quot;btn btn-secondary&quot;&gt;← Voltar ao Painel&lt;/a&gt;
+{% endblock %}
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 dashboard.html</span><pre class='file-content' style='display:none; margin-top:5px;'>{% extends &quot;base.html&quot; %}
+
+{% block title %}Painel — {{ empresa.nome }}{% endblock %}
+
+{% block content %}
+&lt;h2&gt;☁️ Painel Administrativo — {{ empresa.nome }}&lt;/h2&gt;
+
+&lt;div class=&quot;row g-4&quot;&gt;
+  &lt;div class=&quot;col-md-4&quot;&gt;
+    &lt;div class=&quot;card p-3 text-center shadow-sm&quot;&gt;
+      &lt;h4&gt;{{ clientes }}&lt;/h4&gt;
+      &lt;p&gt;Clientes&lt;/p&gt;
+      &lt;a href=&quot;/clientes/{{ empresa.id }}&quot; class=&quot;btn btn-primary w-100&quot;&gt;Gerenciar Clientes&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;col-md-4&quot;&gt;
+    &lt;div class=&quot;card p-3 text-center shadow-sm&quot;&gt;
+      &lt;h4&gt;{{ funcionarios }}&lt;/h4&gt;
+      &lt;p&gt;Funcionários&lt;/p&gt;
+      &lt;a href=&quot;/funcionarios/{{ empresa.id }}&quot; class=&quot;btn btn-success w-100&quot;&gt;Gerenciar Funcionários&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;col-md-4&quot;&gt;
+    &lt;div class=&quot;card p-3 text-center shadow-sm&quot;&gt;
+      &lt;h4&gt;{{ servicos }}&lt;/h4&gt;
+      &lt;p&gt;Serviços&lt;/p&gt;
+      &lt;a href=&quot;/servicos/{{ empresa.id }}&quot; class=&quot;btn btn-warning w-100&quot;&gt;Gerenciar Serviços&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;mt-5 text-center&quot;&gt;
+  &lt;a href=&quot;/&quot; class=&quot;btn btn-outline-secondary btn-lg&quot;&gt;Sair / Voltar&lt;/a&gt;
+&lt;/div&gt;
+{% endblock %}
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 funcionarios.html</span><pre class='file-content' style='display:none; margin-top:5px;'>{% extends &#039;base.html&#039; %}
+{% block content %}
+&lt;div class=&quot;container mt-4&quot;&gt;
+  &lt;h2 class=&quot;mb-4 text-center&quot;&gt;👩‍💼 Funcionários da empresa {{ empresa.nome }}&lt;/h2&gt;
+
+  &lt;form method=&quot;POST&quot; action=&quot;/funcionarios/{{ empresa.id }}/novo&quot; class=&quot;card p-4 shadow-sm mb-4&quot;&gt;
+    &lt;div class=&quot;mb-3&quot;&gt;
+      &lt;label for=&quot;nome&quot; class=&quot;form-label&quot;&gt;Nome do funcionário:&lt;/label&gt;
+      &lt;input type=&quot;text&quot; id=&quot;nome&quot; name=&quot;nome&quot; class=&quot;form-control&quot; placeholder=&quot;Ex: Maria Oliveira&quot; required&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;mb-3&quot;&gt;
+      &lt;label for=&quot;cargo&quot; class=&quot;form-label&quot;&gt;Cargo:&lt;/label&gt;
+      &lt;input type=&quot;text&quot; id=&quot;cargo&quot; name=&quot;cargo&quot; class=&quot;form-control&quot; placeholder=&quot;Ex: Massagista&quot; required&gt;
+    &lt;/div&gt;
+
+    &lt;button type=&quot;submit&quot; class=&quot;btn btn-primary w-100&quot;&gt;Adicionar Funcionário&lt;/button&gt;
+  &lt;/form&gt;
+
+  &lt;div class=&quot;card shadow-sm p-4&quot;&gt;
+    &lt;h5 class=&quot;mb-3&quot;&gt;👥 Funcionários cadastrados:&lt;/h5&gt;
+    {% if funcionarios %}
+      &lt;ul class=&quot;list-group&quot;&gt;
+        {% for funcionario in funcionarios %}
+          &lt;li class=&quot;list-group-item d-flex justify-content-between align-items-center&quot;&gt;
+            &lt;div&gt;
+              &lt;strong&gt;{{ funcionario.nome }}&lt;/strong&gt;&lt;br&gt;
+              &lt;small&gt;{{ funcionario.cargo }}&lt;/small&gt;
+            &lt;/div&gt;
+            &lt;form method=&quot;POST&quot; action=&quot;/funcionarios/{{ empresa.id }}/deletar/{{ funcionario.id }}&quot;&gt;
+              &lt;button type=&quot;submit&quot; class=&quot;btn btn-sm btn-danger&quot;&gt;Excluir&lt;/button&gt;
+            &lt;/form&gt;
+          &lt;/li&gt;
+        {% endfor %}
+      &lt;/ul&gt;
+    {% else %}
+      &lt;p class=&quot;text-muted&quot;&gt;Nenhum funcionário cadastrado.&lt;/p&gt;
+    {% endif %}
+  &lt;/div&gt;
+
+  &lt;div class=&quot;text-center mt-4&quot;&gt;
+    &lt;a href=&quot;/dashboard/{{ empresa.id }}&quot; class=&quot;btn btn-secondary&quot;&gt;⬅️ Voltar ao painel&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+{% endblock %}
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 home.html</span><pre class='file-content' style='display:none; margin-top:5px;'>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;pt-BR&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;title&gt;☁️ Estética Cloud — Novo Cadastro&lt;/title&gt;
+  &lt;link href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;/head&gt;
+&lt;body class=&quot;bg-light&quot;&gt;
+  &lt;div class=&quot;container mt-5&quot; style=&quot;max-width:540px;&quot;&gt;
+    &lt;h2 class=&quot;mb-3&quot;&gt;☁️ Estética Cloud&lt;/h2&gt;
+    &lt;form action=&quot;/empresas&quot; method=&quot;post&quot;&gt;
+      &lt;input class=&quot;form-control mb-2&quot; name=&quot;nome&quot; placeholder=&quot;Nome da empresa&quot; required&gt;
+      &lt;input class=&quot;form-control mb-2&quot; name=&quot;email&quot; placeholder=&quot;Email&quot; type=&quot;email&quot; required&gt;
+      &lt;input class=&quot;form-control mb-2&quot; name=&quot;senha&quot; type=&quot;password&quot; placeholder=&quot;Senha&quot; required&gt;
+      &lt;button class=&quot;btn btn-primary w-100&quot;&gt;Criar Empresa&lt;/button&gt;
+    &lt;/form&gt;
+    &lt;div class=&quot;mt-3 text-center&quot;&gt;&lt;a href=&quot;/login&quot;&gt;Já tem conta? Entrar&lt;/a&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 login.html</span><pre class='file-content' style='display:none; margin-top:5px;'>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;pt-BR&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;title&gt;Login — Estética Cloud&lt;/title&gt;
+  &lt;link href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;/head&gt;
+&lt;body class=&quot;bg-light&quot;&gt;
+  &lt;div class=&quot;container mt-5&quot; style=&quot;max-width:420px;&quot;&gt;
+    &lt;h2 class=&quot;text-center mb-4&quot;&gt;☁️ Login da Empresa&lt;/h2&gt;
+    {% if erro %}
+      &lt;div class=&quot;alert alert-danger&quot;&gt;{{ erro }}&lt;/div&gt;
+    {% endif %}
+    &lt;form action=&quot;/login&quot; method=&quot;post&quot;&gt;
+      &lt;input class=&quot;form-control mb-3&quot; type=&quot;email&quot; name=&quot;email&quot; placeholder=&quot;E-mail da empresa&quot; required&gt;
+      &lt;input class=&quot;form-control mb-3&quot; type=&quot;password&quot; name=&quot;senha&quot; placeholder=&quot;Senha&quot; required&gt;
+      &lt;button class=&quot;btn btn-primary w-100&quot;&gt;Entrar&lt;/button&gt;
+    &lt;/form&gt;
+    &lt;div class=&quot;text-center mt-3&quot;&gt;&lt;a href=&quot;/&quot;&gt;Cadastrar nova empresa&lt;/a&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 servicos.html</span><pre class='file-content' style='display:none; margin-top:5px;'>{% extends &quot;base.html&quot; %}
+
+{% block title %}Serviços — {{ empresa.nome }}{% endblock %}
+
+{% block content %}
+&lt;div class=&quot;container mt-4&quot;&gt;
+  &lt;h2 class=&quot;mb-4&quot;&gt;💅 Serviços da empresa {{ empresa.nome }}&lt;/h2&gt;
+
+  &lt;form action=&quot;/servicos/{{ empresa.id }}/novo&quot; method=&quot;post&quot; class=&quot;row g-2 mb-4&quot;&gt;
+    &lt;div class=&quot;col-md-3&quot;&gt;
+      &lt;input class=&quot;form-control&quot; name=&quot;nome&quot; placeholder=&quot;Nome do serviço&quot; required&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;col-md-3&quot;&gt;
+      &lt;input class=&quot;form-control&quot; name=&quot;preco&quot; type=&quot;number&quot; step=&quot;0.01&quot; placeholder=&quot;Preço (R$)&quot; required&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;col-md-4&quot;&gt;
+      &lt;input class=&quot;form-control&quot; name=&quot;descricao&quot; placeholder=&quot;Descrição opcional&quot;&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;col-md-2 d-grid&quot;&gt;
+      &lt;button class=&quot;btn btn-primary&quot;&gt;Adicionar&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/form&gt;
+
+  &lt;div class=&quot;card shadow-sm&quot;&gt;
+    &lt;div class=&quot;card-header bg-light&quot;&gt;
+      &lt;h5 class=&quot;mb-0&quot;&gt;Serviços cadastrados&lt;/h5&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;card-body p-0&quot;&gt;
+      &lt;table class=&quot;table table-striped table-hover mb-0&quot;&gt;
+        &lt;thead class=&quot;table-light&quot;&gt;
+          &lt;tr&gt;
+            &lt;th&gt;ID&lt;/th&gt;
+            &lt;th&gt;Nome&lt;/th&gt;
+            &lt;th&gt;Preço (R$)&lt;/th&gt;
+            &lt;th&gt;Descrição&lt;/th&gt;
+            &lt;th class=&quot;text-center&quot;&gt;Ações&lt;/th&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+          {% for s in servicos %}
+          &lt;tr&gt;
+            &lt;td&gt;{{ s.id }}&lt;/td&gt;
+            &lt;td&gt;{{ s.nome }}&lt;/td&gt;
+            &lt;td&gt;{{ &quot;%.2f&quot;|format(s.preco) }}&lt;/td&gt;
+            &lt;td&gt;{{ s.descricao }}&lt;/td&gt;
+            &lt;td class=&quot;text-center&quot;&gt;
+              &lt;a href=&quot;/servicos/{{ empresa.id }}/excluir/{{ s.id }}&quot; class=&quot;btn btn-sm btn-outline-danger&quot;&gt;
+                Excluir
+              &lt;/a&gt;
+            &lt;/td&gt;
+          &lt;/tr&gt;
+          {% else %}
+          &lt;tr&gt;
+            &lt;td colspan=&quot;5&quot; class=&quot;text-center text-muted py-3&quot;&gt;Nenhum serviço cadastrado.&lt;/td&gt;
+          &lt;/tr&gt;
+          {% endfor %}
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;a href=&quot;/dashboard/{{ empresa.id }}&quot; class=&quot;btn btn-secondary mt-4&quot;&gt;← Voltar ao Painel&lt;/a&gt;
+&lt;/div&gt;
+{% endblock %}
+</pre></li></ul></li><li><span class='folder' onclick='toggleFolder(this)'>📁 utils</span><ul style='list-style:none;padding-left:40px;'><li><span class='file' onclick='toggleFile(this)'>📄 security.py</span><pre class='file-content' style='display:none; margin-top:5px;'>from passlib.context import CryptContext
+
+# Define o algoritmo de hash
+pwd_context = CryptContext(schemes=[&quot;bcrypt&quot;], deprecated=&quot;auto&quot;)
+
+def hash_password(password: str):
+    &quot;&quot;&quot;
+    Gera o hash da senha com bcrypt.
+    bcrypt suporta no máximo 72 bytes, então
+    truncamos senhas maiores para evitar erro.
+    &quot;&quot;&quot;
+    if not password:
+        raise ValueError(&quot;A senha não pode estar vazia.&quot;)
+    
+    # Garante que não ultrapasse 72 bytes (limite do bcrypt)
+    safe_password = password[:72]
+    return pwd_context.hash(safe_password)
+
+def verify_password(plain_password: str, hashed_password: str):
+    &quot;&quot;&quot;
+    Verifica se a senha está correta.
+    Também aplica truncagem antes da verificação.
+    &quot;&quot;&quot;
+    if not plain_password or not hashed_password:
+        return False
+    
+    safe_password = plain_password[:72]
+    return pwd_context.verify(safe_password, hashed_password)
+
+</pre></li></ul></li></ul></li><li><span class='file' onclick='toggleFile(this)'>📄 main.py</span><pre class='file-content' style='display:none; margin-top:5px;'>from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from app.routes import empresas, auth, dashboard, clientes, funcionarios, servicos
+from app.database import engine
+from app.models import models
+
+models.Base.metadata.create_all(bind=engine)
+
+app = FastAPI(title=&quot;Estética Cloud&quot;)
+templates = Jinja2Templates(directory=&quot;app/templates&quot;)
+app.mount(&quot;/static&quot;, StaticFiles(directory=&quot;app/templates&quot;), name=&quot;static&quot;)
+
+app.include_router(auth.router)
+app.include_router(empresas.router)
+app.include_router(dashboard.router)
+app.include_router(clientes.router)
+app.include_router(funcionarios.router)
+app.include_router(servicos.router)
+
+@app.get(&quot;/&quot;)
+def home():
+    return {&quot;msg&quot;: &quot;API Estética Cloud rodando com sucesso 🚀&quot;}
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 requirements.txt</span><pre class='file-content' style='display:none; margin-top:5px;'>fastapi
+uvicorn
+jinja2
+python-dotenv
+sqlalchemy
+pymysql
+python-multipart
+passlib[bcrypt]
+gunicorn
+uvicorn
+gunicorn
+uvicorn
+psycopg2-binary
+bcrypt
+passlib[bcrypt]
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 sync_mysql_to_postgres.py</span><pre class='file-content' style='display:none; margin-top:5px;'>#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+&quot;&quot;&quot;
+Script de migração de dados MySQL -&gt; PostgreSQL
+Compatível com SQLAlchemy 2.x
+Limita campo senha a 72 bytes para bcrypt
+&quot;&quot;&quot;
+
+from sqlalchemy import create_engine, MetaData, Table, insert
+from sqlalchemy.exc import SQLAlchemyError
+
+# Configuração MySQL
+MYSQL_USER = &quot;root&quot;
+MYSQL_PASSWORD = &quot;&quot;
+MYSQL_HOST = &quot;localhost&quot;
+MYSQL_DB = &quot;estetica_cloud&quot;
+
+# Configuração PostgreSQL
+POSTGRES_USER = &quot;db_a3m8_user&quot;
+POSTGRES_PASSWORD = &quot;9Kkk9oPT6VRTounXRgpYdrueRxEa94fi&quot;
+POSTGRES_HOST = &quot;dpg-d47r22c9c44c73ccebcg-a.oregon-postgres.render.com&quot;
+POSTGRES_DB = &quot;db_a3m8&quot;
+POSTGRES_PORT = &quot;5432&quot;
+
+# Conexões
+mysql_engine = create_engine(f&quot;mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}/{MYSQL_DB}&quot;)
+postgres_engine = create_engine(f&quot;postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}&quot;)
+
+# Tabelas que serão migradas
+TABLES = [&quot;empresas&quot;, &quot;clientes&quot;, &quot;funcionarios&quot;, &quot;servicos&quot;]
+
+def migrate_table(table_name):
+    try:
+        # Metadados MySQL
+        mysql_meta = MetaData()
+        mysql_meta.reflect(bind=mysql_engine)
+        table = mysql_meta.tables[table_name]
+
+        # Ler dados do MySQL
+        with mysql_engine.connect() as mysql_conn:
+            results = mysql_conn.execute(table.select()).all()
+
+        # Preparar dados (limitar senha a 72 bytes)
+        records = []
+        for row in results:
+            row_dict = dict(row._mapping)  # SQLAlchemy 2.x
+            if &quot;senha&quot; in row_dict and row_dict[&quot;senha&quot;]:
+                row_dict[&quot;senha&quot;] = row_dict[&quot;senha&quot;][:72]
+            records.append(row_dict)
+
+        if not records:
+            print(f&quot;[INFO] Nenhum registro na tabela {table_name}&quot;)
+            return
+
+        # Inserir no PostgreSQL
+        postgres_meta = MetaData()
+        postgres_meta.reflect(bind=postgres_engine)
+        pg_table = postgres_meta.tables[table_name]
+
+        with postgres_engine.begin() as pg_conn:
+            pg_conn.execute(insert(pg_table), records)
+
+        print(f&quot;[OK] Migrada tabela {table_name} ({len(records)} registros)&quot;)
+
+    except SQLAlchemyError as e:
+        print(f&quot;[ERRO] Falha ao migrar tabela {table_name}: {e}&quot;)
+
+if __name__ == &quot;__main__&quot;:
+    for t in TABLES:
+        migrate_table(t)
+</pre></li><li><span class='file' onclick='toggleFile(this)'>📄 sync_mysql_to_postgres.py.bak</span><pre class='file-content' style='display:none; margin-top:5px;'>import os
+from sqlalchemy import create_engine, MetaData, Table
+from sqlalchemy.orm import sessionmaker
+import pymysql
+import psycopg2
+
+# ------------------------
+# CONFIGURAÇÃO DOS BANCOS
+# ------------------------
+
+# MySQL local
+MYSQL_USER = &quot;root&quot;
+MYSQL_PASSWORD = &quot;SUA_SENHA_MYSQL&quot;
+MYSQL_HOST = &quot;localhost&quot;
+MYSQL_DB = &quot;estetica_cloud&quot;
+
+# PostgreSQL Render
+POSTGRES_URL = os.getenv(
+    &quot;DATABASE_URL&quot;,
+    &quot;postgresql://db_a3m8_user:9Kkk9oPT6VRTounXRgpYdrueRxEa94fi@dpg-d47r22c9c44c73ccebcg-a.oregon-postgres.render.com/db_a3m8&quot;
+)
+
+# ------------------------
+# CONEXÕES
+# ------------------------
+
+# MySQL
+mysql_engine = create_engine(f&quot;mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}/{MYSQL_DB}&quot;)
+mysql_conn = mysql_engine.connect()
+mysql_meta = MetaData(bind=mysql_engine)
+mysql_meta.reflect()
+
+# PostgreSQL
+pg_engine = create_engine(POSTGRES_URL)
+pg_conn = pg_engine.connect()
+pg_meta = MetaData(bind=pg_engine)
+
+# Cria tabelas no PostgreSQL se não existirem
+for table_name in mysql_meta.tables:
+    table = Table(table_name, mysql_meta, autoload_with=mysql_engine)
+    table.metadata.create_all(pg_engine)
+
+# ------------------------
+# SINCRONIZAÇÃO DADOS
+# ------------------------
+
+for table_name, table_obj in mysql_meta.tables.items():
+    print(f&quot;⏳ Sincronizando tabela: {table_name}&quot;)
+    # Seleciona todos os dados do MySQL
+    result = mysql_conn.execute(table_obj.select())
+    rows = [dict(r) for r in result]
+    if rows:
+        pg_conn.execute(table_obj.insert(), rows)
+    print(f&quot;✅ {len(rows)} registros inseridos em {table_name}&quot;)
+
+print(&quot;🎉 Sincronização completa!&quot;)
+mysql_conn.close()
+pg_conn.close()
+</pre></li></ul>
+<script>
+function toggleFolder(el) {
+    let next = el.nextElementSibling;
+    if (!next) return;
+    next.style.display = (next.style.display === 'none' || next.style.display === '') ? 'block' : 'none';
+}
+function toggleFile(el) {
+    let next = el.nextElementSibling;
+    if (!next) return;
+    next.style.display = (next.style.display === 'none' || next.style.display === '') ? 'block' : 'none';
+}
+</script>
+</body>
+</html>
