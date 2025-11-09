@@ -1,0 +1,58 @@
+import os
+from sqlalchemy import create_engine, MetaData, Table
+from sqlalchemy.orm import sessionmaker
+import pymysql
+import psycopg2
+
+# ------------------------
+# CONFIGURAÇÃO DOS BANCOS
+# ------------------------
+
+# MySQL local
+MYSQL_USER = "root"
+MYSQL_PASSWORD = "SUA_SENHA_MYSQL"
+MYSQL_HOST = "localhost"
+MYSQL_DB = "estetica_cloud"
+
+# PostgreSQL Render
+POSTGRES_URL = os.getenv(
+    "DATABASE_URL",
+    "postgresql://db_a3m8_user:9Kkk9oPT6VRTounXRgpYdrueRxEa94fi@dpg-d47r22c9c44c73ccebcg-a.oregon-postgres.render.com/db_a3m8"
+)
+
+# ------------------------
+# CONEXÕES
+# ------------------------
+
+# MySQL
+mysql_engine = create_engine(f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}/{MYSQL_DB}")
+mysql_conn = mysql_engine.connect()
+mysql_meta = MetaData(bind=mysql_engine)
+mysql_meta.reflect()
+
+# PostgreSQL
+pg_engine = create_engine(POSTGRES_URL)
+pg_conn = pg_engine.connect()
+pg_meta = MetaData(bind=pg_engine)
+
+# Cria tabelas no PostgreSQL se não existirem
+for table_name in mysql_meta.tables:
+    table = Table(table_name, mysql_meta, autoload_with=mysql_engine)
+    table.metadata.create_all(pg_engine)
+
+# ------------------------
+# SINCRONIZAÇÃO DADOS
+# ------------------------
+
+for table_name, table_obj in mysql_meta.tables.items():
+    print(f"⏳ Sincronizando tabela: {table_name}")
+    # Seleciona todos os dados do MySQL
+    result = mysql_conn.execute(table_obj.select())
+    rows = [dict(r) for r in result]
+    if rows:
+        pg_conn.execute(table_obj.insert(), rows)
+    print(f"✅ {len(rows)} registros inseridos em {table_name}")
+
+print("🎉 Sincronização completa!")
+mysql_conn.close()
+pg_conn.close()
