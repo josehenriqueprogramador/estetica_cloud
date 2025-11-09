@@ -1,29 +1,16 @@
 from passlib.context import CryptContext
 
-# Define o algoritmo de hash
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# Usa bcrypt_sha256 para evitar limite de 72 bytes
+pwd_context = CryptContext(schemes=["bcrypt_sha256"], deprecated="auto")
 
-def hash_password(password: str):
+def hash_password(password: str) -> str:
     """
-    Gera o hash da senha com bcrypt.
-    bcrypt suporta no máximo 72 bytes, então
-    truncamos senhas maiores para evitar erro.
+    Recebe uma senha em texto puro e retorna o hash seguro.
     """
-    if not password:
-        raise ValueError("A senha não pode estar vazia.")
-    
-    # Garante que não ultrapasse 72 bytes (limite do bcrypt)
-    safe_password = password[:72]
-    return pwd_context.hash(safe_password)
+    return pwd_context.hash(password)
 
-def verify_password(plain_password: str, hashed_password: str):
+def verify_password(plain_password: str, hashed_password: str) -> bool:
     """
-    Verifica se a senha está correta.
-    Também aplica truncagem antes da verificação.
+    Verifica se a senha em texto puro corresponde ao hash armazenado.
     """
-    if not plain_password or not hashed_password:
-        return False
-    
-    safe_password = plain_password[:72]
-    return pwd_context.verify(safe_password, hashed_password)
-
+    return pwd_context.verify(plain_password, hashed_password)
