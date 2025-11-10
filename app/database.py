@@ -3,6 +3,10 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 from dotenv import load_dotenv
 import os
 
+# Configura manualmente a variável se ela não existir (Render não lê .env)
+if not os.getenv("DATABASE_URL"):
+    os.environ["DATABASE_URL"] = "postgresql+psycopg2://db_a3m8_user:9Kkk9oPT6VRTounXRgpYdrueRxEa94fi@dpg-d47r22c9c44c73ccebcg-a.oregon-postgres.render.com:5432/db_a3m8"
+
 # Carrega variáveis do .env
 load_dotenv()
 
